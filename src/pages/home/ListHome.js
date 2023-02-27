@@ -10,8 +10,7 @@ export default function ListHome() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const homes = useSelector((state) => {
-    console.log(state);
-    // return state.homes.homes.homes;
+    return state.homes.homes.homes;
   });
   const totalPages = useSelector((state) => {
     if (state.homes.homes !== undefined) {
@@ -19,7 +18,6 @@ export default function ListHome() {
     }
   });
   useEffect(() => {
-    console.log(0, page1);
     dispatch(getHomes(page1));
   }, []);
   return (
@@ -27,6 +25,7 @@ export default function ListHome() {
       <div className="col-12">
         <table border={1}>
           <tr>
+            <td>STT</td>
             <td>Name</td>
             <td>Address</td>
             <td>Description</td>
@@ -35,17 +34,19 @@ export default function ListHome() {
             <td>Category</td>
             <td>Image</td>
           </tr>
-          {homes.map((item) => (
-            <tr>
-              <td>{item.nameHome}</td>
-              <td>{item.address}</td>
-              <td>{item.description}</td>
-              <td>{item.price}</td>
-              <td>{item.count}</td>
-              <td>{item.nameCategory}</td>
-              <td>{item.image}</td>
-            </tr>
-          ))}
+          {homes !== undefined &&
+            homes.map((item, key) => (
+              <tr>
+                <td>{key}</td>
+                <td>{item.nameHome}</td>
+                <td>{item.address}</td>
+                <td>{item.description}</td>
+                <td>{item.price}</td>
+                <td>{item.count}</td>
+                <td>{item.nameCategory}</td>
+                <td>{item.image}</td>
+              </tr>
+            ))}
         </table>
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-center">

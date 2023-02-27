@@ -2,9 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import customAxios from "./api";
 
 export const getHomes = createAsyncThunk("homes/getHomes", async (page) => {
-  console.log(3, page);
   const res = await customAxios.get("homes?page=" + page);
-  console.log(2, res.data);
+
   return res.data;
 });
 
