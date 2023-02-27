@@ -1,26 +1,38 @@
 import { Link, useNavigate } from "react-router-dom";
-import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import swal from "sweetalert";
+import * as Yup from "yup";
 import { storage } from "../../upload/firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { register } from "../../service/userService";
+
+import { addHome } from "../../service/homeService";
 const validateSchema = Yup.object().shape({
-  username: Yup.string()
+  nameHome: Yup.string()
     .min(2, "Too short!")
     .max(50, "Too long!")
     .required("Required"),
-  password: Yup.string()
+  address: Yup.string()
+    .min(2, "Too short!")
+    .max(50, "Too long!")
+    .required("Required"),
+  description: Yup.string()
+    .min(2, "Too short!")
+    .max(50, "Too long!")
+    .required("Required"),
+  price: Yup.string()
     .min(2, "Too short!")
     .max(50, "Too long!")
     .required("Required"),
 });
 
-export default function Register() {
+export default function CreateHome() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => {
+    return state.user.currentUser;
+  });
   const [images, setImages] = useState([]);
   const [urls, setUrls] = useState([]);
   const [progress, setProgress] = useState(0);
@@ -63,64 +75,98 @@ export default function Register() {
       .then(() => alert("All images uploaded"))
       .catch((err) => console.log(err));
   };
-
-  const handleRegister = (values) => {
+  const handleCreateHome = (values) => {
     console.log(1, values);
-    let data = { ...values, avatar: urls[0] };
-    dispatch(register(data)).then((value) => {
-      if (value.payload === "Username already registered") {
-        swal("Username already registered");
-        navigate("/register");
-      } else {
-        navigate("/");
-      }
+    let idUser = user.idUser;
+    let data = { ...values, image: urls[0], idUser };
+    dispatch(addHome(data)).then((value) => {
+      alert("Create Success !!!");
     });
   };
 
   return (
     <div className="row">
       <div className="col-8 offset-3">
-        <h1 className="text-center">Register</h1>
+        <h1 className="text-center">Add Home</h1>
         <div className="row">
           <div className="col-7">
             <Formik
               initialValues={{
-                username: "",
-                password: "",
+                nameHome: "",
+                address: "",
+                description: "",
+                price: "",
+                idCategory: "",
               }}
               validationSchema={validateSchema}
               onSubmit={(values) => {
-                handleRegister(values);
+                handleCreateHome(values);
               }}
             >
               <Form>
                 <div className="form-group">
-                  <label htmlFor="username">Username</label>
+                  <label htmlFor="nameHome">Name Home</label>
                   <Field
                     type="text"
-                    name={"username"}
+                    name={"nameHome"}
                     className="form-control"
-                    id="username"
+                    id="nameHome"
                   />
                   <alert className="text-danger">
-                    <ErrorMessage name={"username"}></ErrorMessage>
+                    <ErrorMessage name={"nameHome"}></ErrorMessage>
                   </alert>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="address">Address</label>
                   <Field
-                    type="password"
-                    name={"password"}
+                    type="text"
+                    name={"address"}
                     className="form-control"
-                    id="password"
+                    id="address"
                   />
                   <alert className="text-danger">
-                    <ErrorMessage name={"password"}></ErrorMessage>
+                    <ErrorMessage name={"address"}></ErrorMessage>
+                  </alert>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="description">description</label>
+                  <Field
+                    type="text"
+                    name={"description"}
+                    className="form-control"
+                    id="description"
+                  />
+                  <alert className="text-danger">
+                    <ErrorMessage name={"description"}></ErrorMessage>
+                  </alert>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="price">price</label>
+                  <Field
+                    type="text"
+                    name={"price"}
+                    className="form-control"
+                    id="price"
+                  />
+                  <alert className="text-danger">
+                    <ErrorMessage name={"price"}></ErrorMessage>
+                  </alert>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="idCategory">Category</label>
+                  <Field
+                    type="text"
+                    name={"idCategory"}
+                    className="form-control"
+                    id="idCategory"
+                  />
+                  <alert className="text-danger">
+                    <ErrorMessage name={"idCategory"}></ErrorMessage>
                   </alert>
                 </div>
                 <div class="form-group">
                   <label for="exampleFormControlFile1">
-                    <strong>Upload Image Album</strong>
+                    <strong>Upload Home Image Here</strong>
                   </label>
                   <input
                     type="file"
@@ -139,16 +185,8 @@ export default function Register() {
                   </button>
                 </div>
                 <div>
-                  <button type="button" className="btn btn-secondary">
-                    <Link
-                      to={"/"}
-                      style={{ textDecoration: "none", color: "white" }}
-                    >
-                      Login
-                    </Link>
-                  </button>
                   <button type="submit" className="btn btn-primary ml-3">
-                    Signup
+                    Add
                   </button>
                 </div>
               </Form>
