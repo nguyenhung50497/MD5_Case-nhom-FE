@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { addHome, getHomes } from "../../service/homeService";
 
 const initialState = {
-  homes: {},
+  homes: [],
   home: {},
 };
 
