@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router";
-import { getHomes } from "../../service/homeService";
+import { deleteHome, getHomes } from "../../service/homeService";
 import { useEffect } from "react";
+
+import swal from "sweetalert";
 
 export default function ListHome() {
   const [page, setPage] = useSearchParams();
@@ -33,18 +35,52 @@ export default function ListHome() {
             <td>Count</td>
             <td>Category</td>
             <td>Image</td>
+            <td>Action</td>
           </tr>
           {homes !== undefined &&
             homes.map((item, key) => (
               <tr>
-                <td>{key}</td>
+                <td>{key + 1}</td>
                 <td>{item.nameHome}</td>
                 <td>{item.address}</td>
                 <td>{item.description}</td>
                 <td>{item.price}</td>
                 <td>{item.count}</td>
                 <td>{item.nameCategory}</td>
-                <td>{item.image}</td>
+                <td>
+                  <img src={item.image} alt="" />
+                </td>
+                <td>
+                  <button
+                    onClick={() => {
+                      swal({
+                        title: "Are you sure?",
+                        text: "!!!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                      }).then((willDelete) => {
+                        if (willDelete) {
+                          dispatch(deleteHome(item.idHome)).then(() => {
+                            dispatch(getHomes()).then(() => {
+                              navigate("/home");
+                            });
+                          });
+                          swal("Delete Success!!", {
+                            icon: "success",
+                          });
+                        } else {
+                          swal("Please try again!");
+                        }
+                      });
+                    }}
+                  >
+                    Delete
+                  </button>
+                  <Link to={`edit-home/${item.idHome}`}>
+                    <button>Edit</button>
+                  </Link>
+                </td>
               </tr>
             ))}
         </table>
