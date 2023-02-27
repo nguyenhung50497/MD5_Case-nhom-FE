@@ -11,7 +11,7 @@ export default function Login() {
     const handleLogin = async (values) => {
         await dispatch(login(values)).then((e) => {
             if (e.payload !== "User not found" && e.payload !== "Wrong password") {
-                navigate('/home/albums')
+                navigate('/home/homes')
             } else if (e.payload === "User not found" ) {
                 swal("User not found");
                 navigate('/')

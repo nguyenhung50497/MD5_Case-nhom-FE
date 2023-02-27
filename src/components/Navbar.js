@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import {storage} from "../upload/firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { addAlbum, getAlbums } from "../service/albumService";
 const validateSchema = Yup.object().shape({
     nameAlbum: Yup.string()
         .min(2, "Too short!")
@@ -57,14 +56,6 @@ export default function Navbar() {
         Promise.all(promises)
             .then(() => alert("All images uploaded"))
             .catch((err) => console.log(err));
-    };
-    const handleAdd = (values) => {
-        let data = [{...values, imageAlbum: urls[0]}, user.token]
-        dispatch(addAlbum(data)).then(() => {
-            dispatch(getAlbums()).then(() => {
-                navigate('/home/albums')
-            })
-        })
     }
     return (
         <>
@@ -114,57 +105,6 @@ export default function Navbar() {
                     <img className="ml-3" src={user.avatar} alt={user.avatar} style={{width: "50px", height: '50px', borderRadius: '25%'}} />
                 </div>
             </nav>
-            <Formik 
-                initialValues={{
-                    nameAlbum: '',
-                    idUser: user.idUser,
-                    countSong: 0,
-                }}
-
-                validationSchema={validateSchema}
-
-                onSubmit={(values) => {handleAdd(values)}}
-            >
-                <Form>
-                    <div class="modal fade" id="addAlbumModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Create Album</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            <div class="modal-body">
-                                <div className="row">
-                                    <div className="col-7">
-                                        <h1>Create Album</h1>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlInput1"><strong>Name Album</strong></label>
-                                            <Field type="text" name={'nameAlbum'} class="form-control" id="exampleFormControlInput1" placeholder="Name album"/>
-                                            <alert className="text-danger"><ErrorMessage name={'nameAlbum'}></ErrorMessage></alert>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlFile1"><strong>Upload Image Album</strong></label>
-                                            <input type="file" class="form-control-file" id="exampleFormControlFile1" multiple onChange={handleChange} />
-                                            <br/>
-                                        </div>
-                                    </div>
-                                    <div className="col-5">
-                                        <img className="mt-1" src={urls[0]} alt={urls[0]} />
-                                    </div>
-                                </div>
-                            </div>
-                                <div class="modal-footer">
-                                    <button type="button" className="btn btn-success" onClick={() => dispatch(handleUpload)}>Upload</button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Form>
-            </Formik>
         </>
     )
 }
