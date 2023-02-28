@@ -4,9 +4,9 @@ import Home from "./pages/home/Home";
 import Login from "./pages/user/Login";
 import Register from "./pages/user/Register";
 import { useSelector } from "react-redux";
-import CreateHome from "./pages/home/CreateHome";
-import ListHome from "./pages/home/ListHome";
-import EditHome from "./pages/home/EditHome";
+import CreateHome from "./pages/homes/CreateHome";
+import ListHome from "./pages/homes/ListHome";
+import EditHome from "./pages/homes/EditHome";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
