@@ -170,7 +170,7 @@ export default function CreateHome() {
                   >
                     {categories !== undefined &&
                       categories.map((item) => (
-                        <option value={item.idCategory}>
+                        <option value={item.idCategory} selected>
                           {item.nameCategory}
                         </option>
                       ))}
