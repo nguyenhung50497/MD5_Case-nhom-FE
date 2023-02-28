@@ -22,9 +22,12 @@ export default function ListHome() {
   useEffect(() => {
     dispatch(getHomes(page1));
   }, []);
+  const handleSearch = (value) => {
+    dispatch(searchHome(value));
+  };
   return (
-    <div className="row">
-      <div className="col-12">
+    <div className="container-fluid row">
+      <div className="col-10 mt-2 offset-3">
         <table border={1}>
           <tr>
             <td>STT</td>
@@ -37,52 +40,105 @@ export default function ListHome() {
             <td>Image</td>
             <td>Action</td>
           </tr>
-          {homes !== undefined &&
-            homes.map((item, key) => (
-              <tr>
-                <td>{key + 1}</td>
-                <td>{item.nameHome}</td>
-                <td>{item.address}</td>
-                <td>{item.description}</td>
-                <td>{item.price}</td>
-                <td>{item.count}</td>
-                <td>{item.nameCategory}</td>
-                <td>
-                  <img src={item.image} alt="" />
-                </td>
-                <td>
-                  <button
-                    onClick={() => {
-                      swal({
-                        title: "Are you sure?",
-                        text: "!!!",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                      }).then((willDelete) => {
-                        if (willDelete) {
-                          dispatch(deleteHome(item.idHome)).then(() => {
-                            dispatch(getHomes(page1)).then(() => {
-                              navigate("/home?page=" + page1);
-                            });
+          {search ? (
+            <>
+              {search !== undefined &&
+                search.map((item, key) => (
+                  <tr>
+                    <td>{key + 1}</td>
+                    <td>{item.nameHome}</td>
+                    <td>{item.address}</td>
+                    <td>{item.description}</td>
+                    <td>{item.price}</td>
+                    <td>{item.count}</td>
+                    <td>{item.nameCategory}</td>
+                    <td>
+                      <img src={item.image} alt="" />
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => {
+                          swal({
+                            title: "Are you sure?",
+                            text: "!!!",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                          }).then((willDelete) => {
+                            if (willDelete) {
+                              dispatch(deleteHome(item.idHome)).then(() => {
+                                dispatch(getHomes(page1)).then(() => {
+                                  navigate("/home?page=" + page1);
+                                });
+                              });
+                              swal("Delete Success!!", {
+                                icon: "success",
+                              });
+                            } else {
+                              swal("Please try again!");
+                            }
                           });
-                          swal("Delete Success!!", {
-                            icon: "success",
+                        }}
+                      >
+                        Delete
+                      </button>
+                      <Link to={`edit-home/${item.idHome}`}>
+                        <button>Edit</button>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+            </>
+          ) : (
+            <>
+              {homes !== undefined &&
+                homes.map((item, key) => (
+                  <tr>
+                    <td>{key + 1}</td>
+                    <td>{item.nameHome}</td>
+                    <td>{item.address}</td>
+                    <td>{item.description}</td>
+                    <td>{item.price}</td>
+                    <td>{item.count}</td>
+                    <td>{item.nameCategory}</td>
+                    <td>
+                      <img src={item.image} alt="" />
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => {
+                          swal({
+                            title: "Are you sure?",
+                            text: "!!!",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                          }).then((willDelete) => {
+                            if (willDelete) {
+                              dispatch(deleteHome(item.idHome)).then(() => {
+                                dispatch(getHomes(page1)).then(() => {
+                                  navigate("/home?page=" + page1);
+                                });
+                              });
+                              swal("Delete Success!!", {
+                                icon: "success",
+                              });
+                            } else {
+                              swal("Please try again!");
+                            }
                           });
-                        } else {
-                          swal("Please try again!");
-                        }
-                      });
-                    }}
-                  >
-                    Delete
-                  </button>
-                  <Link to={`edit-home/${item.idHome}`}>
-                    <button>Edit</button>
-                  </Link>
-                </td>
-              </tr>
-            ))}
+                        }}
+                      >
+                        Delete
+                      </button>
+                      <Link to={`edit-home/${item.idHome}`}>
+                        <button>Edit</button>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+            </>
+          )}
         </table>
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-center">
