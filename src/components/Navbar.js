@@ -18,22 +18,22 @@ export default function Navbar() {
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="img/icon-deal.png" alt="Icon" style={{width: "30px", height: "30px"}}/>
                     </div>
-                    <h1 class="m-0 text-primary">KTH</h1>
+                    <h1 class="m-0 text-primary">Nhà Xanh</h1>
                 </Link>
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <input
-                  className="form-control offset-1"
+                  className="form-control"
                   type="search"
                   name={'search'}
                   placeholder="Search"
                   aria-label="Search"
-                  style={{width: "320px"}}
+                  style={{maxWidth: "250px"}}
                   onKeyUp={(e) => {
                     handleSearch(e.target.value)
                   }}
                 />
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <Link to="/home" class="nav-item nav-link active">Home</Link>
@@ -63,13 +63,13 @@ export default function Navbar() {
                             </div>
                         </div>
                     </div>
+                </div>
                     <img
                       className="ml-3"
                       src={user.avatar}
                       alt={user.avatar}
                       style={{ width: "50px", height: "50px", borderRadius: "25%" }}
                     />
-                </div>
             </nav>
         </div>
     </>
