@@ -50,6 +50,12 @@ export default function Navbar() {
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{user.username}</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a class="btn dropdown-item">Profile</a>
+                                <Link class="dropdown-item" to={`/user/${user.idUser}`}>
+                Profile
+              </Link>
+              <Link class="dropdown-item" to={`/user/change-password/${user.idUser}`}>
+                Change Password
+              </Link>
                                 <a class="btn dropdown-item text-danger" 
                                   onClick={() => {
                                     localStorage.clear();
