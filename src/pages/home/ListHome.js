@@ -101,7 +101,7 @@ export default function ListHome() {
                     className="page-link"
                     onClick={() => {
                       dispatch(getHomes(page1 - 1));
-                      navigate("/home/homes?page=" + (page1 - 1));
+                      navigate("/home?page=" + (page1 - 1));
                     }}
                   >
                     {" "}
@@ -130,7 +130,7 @@ export default function ListHome() {
                     className="page-link"
                     onClick={() => {
                       dispatch(getHomes(Number(page1) + 1));
-                      navigate("/home/homes?page=" + (Number(page1) + 1));
+                      navigate("/home?page=" + (Number(page1) + 1));
                     }}
                   >
                     {" "}

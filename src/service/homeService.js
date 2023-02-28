@@ -3,7 +3,6 @@ import customAxios from "./api";
 
 export const getHomes = createAsyncThunk("homes/getHomes", async (page) => {
   const res = await customAxios.get("homes?page=" + page);
-
   return res.data;
 });
 

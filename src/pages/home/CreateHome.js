@@ -84,7 +84,6 @@ export default function CreateHome() {
       .catch((err) => console.log(err));
   };
   const handleCreateHome = (values) => {
-    console.log(1, values);
     let idUser = user.idUser;
     let data = { ...values, image: urls[0], idUser: idUser };
     console.log(1, data);
@@ -93,7 +92,6 @@ export default function CreateHome() {
       navigate("/home");
     });
   };
-  console.log(categories);
   return (
     <div className="row">
       <div className="col-8 offset-3">
