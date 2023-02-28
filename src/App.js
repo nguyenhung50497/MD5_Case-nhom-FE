@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import CreateHome from "./pages/homes/CreateHome";
 import ListHome from "./pages/homes/ListHome";
 import EditHome from "./pages/homes/EditHome";
+import Profile from "./pages/user/profile";
+import User from "./pages/home/User";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
@@ -21,6 +23,9 @@ function App() {
             <Route path={"create-home"} element={<CreateHome></CreateHome>} />
             <Route path={"edit-home/:id"} element={<EditHome />}></Route>
             <Route path={"delete-home/:id"}></Route>
+          </Route>
+          <Route path={"user"} element={<User/>}>
+            <Route path={":idUser"} element={<Profile/>}></Route>
           </Route>
 
           {/* {

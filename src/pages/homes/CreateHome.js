@@ -85,13 +85,11 @@ export default function CreateHome() {
   const handleCreateHome = (values) => {
     let idUser = user.idUser;
     let data = { ...values, image: urls[0], idUser: idUser };
-    console.log(1, data);
     dispatch(addHome(data)).then((value) => {
       swal("Create Success !!!");
       navigate("/home");
     });
   };
-  console.log(2, categories);
   return (
     <div className="row">
       <div className="col-8 offset-3">
@@ -108,7 +106,6 @@ export default function CreateHome() {
               }}
               validationSchema={validateSchema}
               onSubmit={(values) => {
-                console.log(3, values);
                 handleCreateHome(values);
               }}
             >

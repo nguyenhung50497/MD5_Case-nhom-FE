@@ -29,7 +29,10 @@ export const searchHome = createAsyncThunk(
     })
 
 
-export const editHome = createAsyncThunk("homes/editHome", async (data) => {
+export const editHome = createAsyncThunk(
+    "homes/editHome",
+    async (data) => {
   const res = await customAxios.put("homes/" + data[1], data[0]);
   return res.data;
 });
+

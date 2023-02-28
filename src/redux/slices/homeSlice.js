@@ -4,14 +4,14 @@ import {
   deleteHome,
   editHome,
   getHomeById,
-    searchHome,
   getHomes,
+  searchHome,
 } from "../../service/homeService";
 
 const initialState = {
   homes: [],
   home: {},
-  search: []
+  searchHome: [],
 };
 
 const homeSlice = createSlice({
@@ -25,9 +25,6 @@ const homeSlice = createSlice({
     builder.addCase(addHome.fulfilled, (state, action) => {
       state.homes.homes.push(action.payload);
     });
-    builder.addCase(searchHome.fulfilled, (state, action) => {
-      state.search = action.payload;
-    });
     builder.addCase(editHome.fulfilled, (state, action) => {
       state.homes.homes.splice(action.payload.idHome, 1, action.payload);
     });
@@ -36,6 +33,9 @@ const homeSlice = createSlice({
     });
     builder.addCase(deleteHome.fulfilled, (state, action) => {
       state.homes.homes.splice(action.payload, 1);
+    });
+    builder.addCase(searchHome.fulfilled, (state, action) => {
+      state.searchHome = action.payload;
     });
   },
 });
