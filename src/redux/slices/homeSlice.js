@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {addHome, getHomes, searchHome} from "../../service/homeService";
+import {
+  addHome,
+  deleteHome,
+  editHome,
+  getHomeById,
+    searchHome,
+  getHomes,
+} from "../../service/homeService";
 
 const initialState = {
   homes: [],
@@ -19,6 +26,15 @@ const homeSlice = createSlice({
     });
     builder.addCase(searchHome.fulfilled, (state, action) => {
       state.homes = action.payload;
+    });
+    builder.addCase(editHome.fulfilled, (state, action) => {
+      state.homes.homes.splice(action.payload.idHome, 1, action.payload);
+    });
+    builder.addCase(getHomeById.fulfilled, (state, action) => {
+      state.home = action.payload;
+    });
+    builder.addCase(deleteHome.fulfilled, (state, action) => {
+      state.homes.homes.splice(action.payload, 1);
     });
   },
 });

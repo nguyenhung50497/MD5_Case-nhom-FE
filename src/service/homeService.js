@@ -17,7 +17,7 @@ export const addHome = createAsyncThunk("homes/addHome", async (data) => {
 });
 
 export const deleteHome = createAsyncThunk("homes/deleteHome", async (data) => {
-  const res = await customAxios.delete("homes/" + data[0]);
+  const res = await customAxios.delete("homes/" + data);
   return res.data;
 });
 
@@ -29,7 +29,7 @@ export const searchHome = createAsyncThunk(
     })
 
 
-export const editAlbum = createAsyncThunk("albums/editAlbum", async (data) => {
-  const res = await customAxios.put("albums/" + data[0], data[1]);
+export const editHome = createAsyncThunk("homes/editHome", async (data) => {
+  const res = await customAxios.put("homes/" + data[1], data[0]);
   return res.data;
 });
