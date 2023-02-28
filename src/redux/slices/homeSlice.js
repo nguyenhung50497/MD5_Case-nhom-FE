@@ -11,6 +11,7 @@ import {
 const initialState = {
   homes: [],
   home: {},
+  search: []
 };
 
 const homeSlice = createSlice({
@@ -25,7 +26,7 @@ const homeSlice = createSlice({
       state.homes.homes.push(action.payload);
     });
     builder.addCase(searchHome.fulfilled, (state, action) => {
-      state.homes = action.payload;
+      state.search = action.payload;
     });
     builder.addCase(editHome.fulfilled, (state, action) => {
       state.homes.homes.splice(action.payload.idHome, 1, action.payload);
