@@ -12,76 +12,61 @@ export default function Navbar() {
   }
   return (
     <>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <Link class="navbar-brand" to="/home">
-          Home
-        </Link>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <Link class="nav-link" to="create-home">
-                Add Home <span class="sr-only">(current)</span>
-              </Link>
-            </li>
-          </ul>
-          <ul class="navbar-nav mr-auto">
-              <input
-                  className="form-control mr-sm-2"
+        <div class="container-fluid nav-bar bg-transparent">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
+                <Link to="/home" class="navbar-brand d-flex align-items-center text-center">
+                    <div class="icon p-2 me-2">
+                        <img class="img-fluid" src="img/icon-deal.png" alt="Icon" style={{width: "30px", height: "30px"}}/>
+                    </div>
+                    <h1 class="m-0 text-primary">KTH</h1>
+                </Link>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <input
+                  className="form-control offset-1"
                   type="search"
                   name={'search'}
                   placeholder="Search"
                   aria-label="Search"
-                  style={{width: "500px"}}
+                  style={{width: "320px"}}
                   onKeyUp={(e) => {
                     handleSearch(e.target.value)
                   }}
-              />
-          </ul>
-          <div class="btn-group">
-            <button
-              type="button"
-              class="btn btn-secondary dropdown-toggle"
-              data-toggle="dropdown"
-              aria-expanded="false"
-            >
-              {user.username}
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="#">
-                Profile
-              </a>
-              <div class="dropdown-divider"></div>
-              <a
-                class="dropdown-item btn text-danger"
-                onClick={() => {
-                  localStorage.clear();
-                  navigate("/");
-                }}
-              >
-                Logout
-              </a>
-            </div>
-          </div>
-          <img
-            className="ml-3"
-            src={user.avatar}
-            alt={user.avatar}
-            style={{ width: "50px", height: "50px", borderRadius: "25%" }}
-          />
+                />
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <Link to="/home" class="nav-item nav-link active">Home</Link>
+                        <Link to="create-home" class="nav-item nav-link">Create Home</Link>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="property-list.html" class="dropdown-item">Property List</a>
+                                <a href="property-type.html" class="dropdown-item">Property Type</a>
+                                <a href="property-agent.html" class="dropdown-item">Property Agent</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{user.username}</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a class="btn dropdown-item">Profile</a>
+                                <a class="btn dropdown-item text-danger" 
+                                  onClick={() => {
+                                    localStorage.clear();
+                                    navigate("/");
+                                  }}>Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    <img
+                      className="ml-3"
+                      src={user.avatar}
+                      alt={user.avatar}
+                      style={{ width: "50px", height: "50px", borderRadius: "25%" }}
+                    />
+                </div>
+            </nav>
         </div>
-      </nav>
     </>
   );
 }
