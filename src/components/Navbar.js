@@ -62,6 +62,9 @@ export default function Navbar() {
               <Link class="dropdown-item" to={`/user/${user.idUser}`}>
                 Profile
               </Link>
+              <Link class="dropdown-item" to={`/user/change-password/${user.idUser}`}>
+                Change Password
+              </Link>
               <div class="dropdown-divider"></div>
               <a
                 class="dropdown-item btn text-danger"

@@ -27,3 +27,10 @@ export const getProfile = createAsyncThunk(
         return res.data
     }
 )
+
+export const changePassword = createAsyncThunk(
+    "user/changePassword",
+    async (data) => {
+        const res = await customAxios.put('/users/change-password/' + data[1], data[0])
+        return res.data
+})

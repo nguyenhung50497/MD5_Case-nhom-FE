@@ -6,6 +6,13 @@ import {useNavigate, useParams} from "react-router-dom";
 import {editProfile, getProfile} from "../../service/userService";
 import {editHome} from "../../service/homeService";
 import {ErrorMessage, Field, Form, Formik} from "formik";
+import * as Yup from "yup";
+const validateSchema = Yup.object().shape({
+    username: Yup.string()
+        .min(2, "Too short!")
+        .max(50, "Too long!")
+        .required("Required"),
+});
 
 export default function Profile(){
     const dispatch = useDispatch()
@@ -82,6 +89,7 @@ export default function Profile(){
                                     username: user.username,
                                     avatar: user.avatar,
                                 }}
+                                validationSchema={validateSchema}
                                 onSubmit={(values) => {
                                     handleEdit(values).then(
                                         navigate("home"));
@@ -90,13 +98,16 @@ export default function Profile(){
                             >
                                 <Form>
                                     <div className="form-group">
-                                        <label htmlFor="nameHome">Username</label>
+                                        <label htmlFor="username">Username</label>
                                         <Field
                                             type="text"
                                             name={"username"}
                                             className="form-control"
-                                            id="nameHome"
+                                            id="username"
                                         />
+                                        <alert className="text-danger">
+                                            <ErrorMessage name={"username"}></ErrorMessage>
+                                        </alert>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="exampleFormControlFile1">
