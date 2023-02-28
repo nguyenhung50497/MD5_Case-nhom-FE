@@ -80,8 +80,8 @@ export default function Profile(){
     return(
         <>
             <div className="row">
-                <div className="col-8 offset-3">
-                    <h1 className="text-center">Edit Profile</h1>
+                <h1 className="text-center">Edit Profile</h1>
+                <div className="col-9 offset-2">
                     <div className="row">
                         <div className="col-7">
                             <Formik

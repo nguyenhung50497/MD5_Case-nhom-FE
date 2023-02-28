@@ -47,9 +47,6 @@ export default function CreateHome() {
       setImages((prevState) => [...prevState, newImage]);
     }
   };
-  useEffect(() => {
-    dispatch(getCategories());
-  }, []);
   const handleUpload = () => {
     const promises = [];
     if (images.length > 0) {
@@ -90,6 +87,9 @@ export default function CreateHome() {
       navigate("/home");
     });
   };
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
   return (
     <div className="row">
       <div className="col-8 offset-3">

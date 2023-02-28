@@ -15,6 +15,7 @@ export default function ListHome() {
   const homes = useSelector((state) => {
     return state.homes.homes.homes;
   });
+  const user = useSelector(state => state.user.currentUser);
   let search = useSelector((state) => {
     return state.homes.searchHome.homes;
   });
@@ -26,58 +27,90 @@ export default function ListHome() {
   useEffect(() => {
     dispatch(getHomes(page1))
   }, []);
-  const handleSearch = (value) => {
-    dispatch(searchHome(value))
-  }
   return (
     <>
-    <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-0 gx-5 align-items-end">
-                    <div class="col-lg-6">
-                        <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
-                            <h1 class="mb-3">Property Listing</h1>
+    <div className="container-xxl py-5">
+            <div className="container">
+                <div className="row g-0 gx-5 align-items-end">
+                    <div className="col-lg-6">
+                        <div className="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
+                            <h1 className="mb-3">Property Listing</h1>
                             <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum.</p>
                         </div>
                     </div>
-                    <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
-                        <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-                            <li class="nav-item me-2">
-                                <a class="btn btn-outline-primary active" data-bs-toggle="pill" href="#tab-1">Featured</a>
+                    <div className="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
+                        <ul className="nav nav-pills d-inline-flex justify-content-end mb-5">
+                            <li className="nav-item me-2">
+                                <a className="btn btn-outline-primary active" data-bs-toggle="pill" href="#tab-1">Featured</a>
                             </li>
-                            <li class="nav-item me-2">
-                                <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-2">For Sell</a>
+                            <li className="nav-item me-2">
+                                <a className="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-2">For Sell</a>
                             </li>
-                            <li class="nav-item me-0">
-                                <a class="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-3">For Rent</a>
+                            <li className="nav-item me-0">
+                                <a className="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-3">For Rent</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="tab-content">
-                    <div id="tab-1" class="tab-pane fade show p-0 active">
-                        <div class="row g-4">
+                <div className="tab-content">
+                    <div id="tab-1" className="tab-pane fade show p-0 active">
+                        <div className="row g-4">
                         {
                             search ? 
                             <>
                               { search !== undefined &&
                               search.map((item, key) => (
-                                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                                  <div class="property-item rounded overflow-hidden">
-                                      <div class="position-relative overflow-hidden">
-                                          <a href=""><img class="img-fluid" src={item.image} style={{height: "400px", width: "100%"}} alt=""/></a>
-                                          <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                          <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{item.nameHome}</div>
+                                <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                  <div className="property-item rounded overflow-hidden">
+                                      <div className="position-relative overflow-hidden">
+                                          <a href=""><img className="img-fluid" src={item.image} style={{height: "400px", width: "100%"}} alt=""/></a>
+                                          { user.idUser === item.idUser &&
+                                            <>
+                                              <button className="btn-secondary rounded text-white position-absolute start-0 top-0 m-1 py-1 px-2"
+                                                onClick={() => {
+                                                  swal({
+                                                    title: "Are you sure?",
+                                                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                    icon: "warning",
+                                                    buttons: true,
+                                                    dangerMode: true,
+                                                  })
+                                                  .then((willDelete) => {
+                                                    if (willDelete) {
+                                                      dispatch(deleteHome(item.idHome)).then(()=>{
+                                                        dispatch(getHomes(page1)).then(()=>{
+                                                          navigate('/home?page='+page1)
+                                                        })
+                                                      })
+                                                      swal("Poof! Your imaginary file has been deleted!", {
+                                                        icon: "success",
+                                                      });
+                                                    } else {
+                                                      swal("Your imaginary file is safe!");
+                                                    }
+                                                  });
+                                                }}
+                                              >
+                                                Delete
+                                              </button>
+                                              <Link to={`edit-home/${item.idHome}`}>
+                                                <button className="btn-primary rounded text-white position-absolute start-0 top-0 m-1 mt-5 py-1 px-3">
+                                                  Edit
+                                                </button>
+                                              </Link>
+                                            </>
+                                          }
+                                          <div className="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{item.nameHome}</div>
                                       </div>
-                                      <div class="p-4 pb-0">
-                                          <h5 class="text-primary mb-3">${item.price}</h5>
-                                          <a class="d-block h5 mb-2" href="">{item.description}</a>
-                                          <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
+                                      <div className="p-4 pb-0">
+                                          <h5 className="text-primary mb-3">${item.price}</h5>
+                                          <a className="d-block h5 mb-2" href="">{item.description}</a>
+                                          <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
                                       </div>
-                                      <div class="d-flex border-top">
-                                          <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                          <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                          <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                      <div className="d-flex border-top">
+                                          <small className="flex-fill text-center border-end py-2"><i className="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                          <small className="flex-fill text-center border-end py-2"><i className="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                          <small className="flex-fill text-center py-2"><i className="fa fa-bath text-primary me-2"></i>2 Bath</small>
                                       </div>
                                   </div>
                                 </div>
@@ -87,22 +120,57 @@ export default function ListHome() {
                             <>
                             { homes !== undefined &&
                               homes.map((item, key) => (
-                                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                                  <div class="property-item rounded overflow-hidden">
-                                      <div class="position-relative overflow-hidden">
-                                          <a href=""><img class="img-fluid" src={item.image} style={{height: "400px", width: "100%"}} alt=""/></a>
-                                          <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">For Rent</div>
-                                          <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{item.nameHome}</div>
+                                <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                  <div className="property-item rounded overflow-hidden">
+                                      <div className="position-relative overflow-hidden">
+                                          <a href=""><img className="img-fluid" src={item.image} style={{height: "400px", width: "100%"}} alt=""/></a>
+                                          { user.idUser === item.idUser &&
+                                            <>
+                                              <button className="btn-secondary rounded text-white position-absolute start-0 top-0 m-1 py-1 px-2"
+                                                onClick={() => {
+                                                  swal({
+                                                    title: "Are you sure?",
+                                                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                    icon: "warning",
+                                                    buttons: true,
+                                                    dangerMode: true,
+                                                  })
+                                                  .then((willDelete) => {
+                                                    if (willDelete) {
+                                                      dispatch(deleteHome(item.idHome)).then(()=>{
+                                                        dispatch(getHomes(page1)).then(()=>{
+                                                          navigate('/home?page='+page1)
+                                                        })
+                                                      })
+                                                      swal("Poof! Your imaginary file has been deleted!", {
+                                                        icon: "success",
+                                                      });
+                                                    } else {
+                                                      swal("Your imaginary file is safe!");
+                                                    }
+                                                  });
+                                                }}
+                                              >
+                                                Delete
+                                              </button>
+                                              <Link to={`edit-home/${item.idHome}`}>
+                                                <button className="btn-primary rounded text-white position-absolute start-0 top-0 m-1 mt-5 py-1 px-3">
+                                                  Edit
+                                                </button>
+                                              </Link>
+                                            </>
+                                          }
+                                          <div className="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{item.nameHome}</div>
                                       </div>
-                                      <div class="p-4 pb-0">
-                                          <h5 class="text-primary mb-3">${item.price}</h5>
-                                          <a class="d-block h5 mb-2" href="">{item.description}</a>
-                                          <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
+                                      <div className="p-4 pb-0">
+                                          <h5 className="text-primary mb-3">${item.price}</h5>
+                                          <a className="d-block h5 mb-2" href="">{item.description}</a>
+                                          <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
                                       </div>
-                                      <div class="d-flex border-top">
-                                          <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                          <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                          <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                      <div className="d-flex border-top">
+                                          <small className="flex-fill text-center border-end py-2"><i className="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
+                                          <small className="flex-fill text-center border-end py-2"><i className="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                                          <small className="flex-fill text-center py-2"><i className="fa fa-bath text-primary me-2"></i>2 Bath</small>
                                       </div>
                                   </div>
                                 </div>
