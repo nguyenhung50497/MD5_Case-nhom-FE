@@ -1,10 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { searchHome } from "../service/homeService";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
+  const handleSearch = (value) => {
+    dispatch(searchHome(value))
+  }
   return (
     <>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -25,52 +30,24 @@ export default function Navbar() {
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Add
-              </a>
-              <div class="dropdown-menu">
-                <Link class="dropdown-item" to="create-home">
-                  Home
-                </Link>
-                <Link class="dropdown-item" to="/home/create-song">
-                  Song
-                </Link>
-                <div class="dropdown-divider"></div>
-                <a
-                  class="dropdown-item btn"
-                  data-toggle="modal"
-                  data-target="#addAlbumModal"
-                >
-                  Album with Modal
-                </a>
-              </div>
-            </li>
             <li class="nav-item active">
-              <Link class="nav-link" to="/home/albums">
-                Albums <span class="sr-only">(current)</span>
-              </Link>
-            </li>
-            <li class="nav-item active">
-              <Link class="nav-link" to="/home/songs">
-                Songs <span class="sr-only">(current)</span>
+              <Link class="nav-link" to="create-home">
+                Add Home <span class="sr-only">(current)</span>
               </Link>
             </li>
           </ul>
           <ul class="navbar-nav mr-auto">
-            <input
-              class="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              style={{ width: "500px" }}
-            />
+              <input
+                  className="form-control mr-sm-2"
+                  type="search"
+                  name={'search'}
+                  placeholder="Search"
+                  aria-label="Search"
+                  style={{width: "500px"}}
+                  onKeyUp={(e) => {
+                    handleSearch(e.target.value)
+                  }}
+              />
           </ul>
           <div class="btn-group">
             <button
@@ -83,10 +60,7 @@ export default function Navbar() {
             </button>
             <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="#">
-                Another action
-              </a>
-              <a class="dropdown-item" href="#">
-                Something else here
+                Profile
               </a>
               <div class="dropdown-divider"></div>
               <a

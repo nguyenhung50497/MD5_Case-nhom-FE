@@ -26,35 +26,12 @@ export default function ListHome() {
   useEffect(() => {
     dispatch(getHomes(page1))
   }, []);
-  const handleSearch = (values) => {
-    dispatch(searchHome(values.search))
+  const handleSearch = (value) => {
+    dispatch(searchHome(value))
   }
-  console.log(1, search);
   return (
     <div className="container-fluid row">
-      <div className="col-8 offset-3">
-          <Formik
-                initialValues={{
-                    search: ''
-                }}
-                onSubmit={(values) => {
-                  handleSearch(values);
-                }}
-            >
-                <Form>
-                    <Field
-                        className="form-control mr-sm-2"
-                        type="search"
-                        name={'search'}
-                        placeholder="Search"
-                        aria-label="Search"
-                        style={{width: "500px"}}
-                    />
-                    <button type="submit" className='btn btn-success'>Search</button>
-                </Form>
-            </Formik>
-      </div>
-      <div className="col-12">
+      <div className="col-10 mt-2 offset-3">
         <table border={1}>
           <tr>
             <td>STT</td>
@@ -167,8 +144,6 @@ export default function ListHome() {
               ))}
             </>
           }
-          
-          
         </table>
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-center">
