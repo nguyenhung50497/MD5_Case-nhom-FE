@@ -102,7 +102,6 @@ export default function EditHome() {
       navigate("/home");
     });
   };
-  console.log(2, urls);
   return (
     <div className="row">
       <div className="col-8 offset-3">
@@ -180,6 +179,7 @@ export default function EditHome() {
                     className="form-control"
                     id="idCategory"
                   >
+                    <option selected>Category</option>
                     {categories !== undefined &&
                       categories.map((item) => (
                         <option value={item.idCategory}>

@@ -48,7 +48,6 @@ export default function CreateHome() {
     }
   };
   useEffect(() => {
-    console.log(1);
     dispatch(getCategories());
   }, []);
   const handleUpload = () => {
@@ -80,7 +79,7 @@ export default function CreateHome() {
       });
     }
     Promise.all(promises)
-      .then(() => alert("All images uploaded"))
+      .then(() => swal("All images uploaded"))
       .catch((err) => console.log(err));
   };
   const handleCreateHome = (values) => {
@@ -88,10 +87,11 @@ export default function CreateHome() {
     let data = { ...values, image: urls[0], idUser: idUser };
     console.log(1, data);
     dispatch(addHome(data)).then((value) => {
-      alert("Create Success !!!");
+      swal("Create Success !!!");
       navigate("/home");
     });
   };
+  console.log(2, categories);
   return (
     <div className="row">
       <div className="col-8 offset-3">
@@ -108,6 +108,7 @@ export default function CreateHome() {
               }}
               validationSchema={validateSchema}
               onSubmit={(values) => {
+                console.log(3, values);
                 handleCreateHome(values);
               }}
             >
@@ -168,9 +169,10 @@ export default function CreateHome() {
                     className="form-control"
                     id="idCategory"
                   >
+                    <option selected>Category</option>
                     {categories !== undefined &&
-                      categories.map((item) => (
-                        <option value={item.idCategory} selected>
+                      categories.map((item, index) => (
+                        <option value={item.idCategory}>
                           {item.nameCategory}
                         </option>
                       ))}

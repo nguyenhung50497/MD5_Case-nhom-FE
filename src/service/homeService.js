@@ -8,12 +8,10 @@ export const getHomes = createAsyncThunk("homes/getHomes", async (page) => {
 
 export const getHomeById = createAsyncThunk("homes/getHome", async (data) => {
   const res = await customAxios.get("homes/find-by-id/" + data);
-
   return res.data;
 });
 
 export const addHome = createAsyncThunk("homes/addHome", async (data) => {
-  console.log(2, data);
   const res = await customAxios.post("homes", data);
   return res.data;
 });
