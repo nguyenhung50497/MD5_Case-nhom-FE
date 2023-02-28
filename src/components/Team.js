@@ -4,7 +4,7 @@ export default function Team() {
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "600px"}}>
                     <h1 class="mb-3">Nhóm 4</h1>
-                    <p>Our Case Study Module 5</p>
+                    <p>Case Study Module 5</p>
                 </div>
                 <div class="row g-4 offset-2">
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">

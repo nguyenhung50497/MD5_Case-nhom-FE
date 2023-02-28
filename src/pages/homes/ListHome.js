@@ -71,7 +71,7 @@ export default function ListHome() {
                                       </div>
                                       <div class="p-4 pb-0">
                                           <h5 class="text-primary mb-3">${item.price}</h5>
-                                          <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
+                                          <a class="d-block h5 mb-2" href="">{item.description}</a>
                                           <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
                                       </div>
                                       <div class="d-flex border-top">
@@ -96,7 +96,7 @@ export default function ListHome() {
                                       </div>
                                       <div class="p-4 pb-0">
                                           <h5 class="text-primary mb-3">${item.price}</h5>
-                                          <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
+                                          <a class="d-block h5 mb-2" href="">{item.description}</a>
                                           <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
                                       </div>
                                       <div class="d-flex border-top">
