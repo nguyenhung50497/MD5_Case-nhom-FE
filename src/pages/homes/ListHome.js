@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router";
-import { deleteHome, getHomes } from "../../service/homeService";
+import { deleteHome, getHomes, searchHome } from "../../service/homeService";
 import { useEffect } from "react";
 
 import swal from "sweetalert";
+import { Field, Form, Formik } from "formik";
 
 export default function ListHome() {
   const [page, setPage] = useSearchParams();
@@ -14,16 +15,45 @@ export default function ListHome() {
   const homes = useSelector((state) => {
     return state.homes.homes.homes;
   });
+  let search = useSelector((state) => {
+    return state.homes.searchHome.homes;
+  });
   const totalPages = useSelector((state) => {
     if (state.homes.homes !== undefined) {
       return state.homes.homes.totalPage;
     }
   });
   useEffect(() => {
-    dispatch(getHomes(page1));
+    dispatch(getHomes(page1))
   }, []);
+  const handleSearch = (values) => {
+    dispatch(searchHome(values.search))
+  }
+  console.log(1, search);
   return (
-    <div className="row">
+    <div className="container-fluid row">
+      <div className="col-8 offset-3">
+          <Formik
+                initialValues={{
+                    search: ''
+                }}
+                onSubmit={(values) => {
+                  handleSearch(values);
+                }}
+            >
+                <Form>
+                    <Field
+                        className="form-control mr-sm-2"
+                        type="search"
+                        name={'search'}
+                        placeholder="Search"
+                        aria-label="Search"
+                        style={{width: "500px"}}
+                    />
+                    <button type="submit" className='btn btn-success'>Search</button>
+                </Form>
+            </Formik>
+      </div>
       <div className="col-12">
         <table border={1}>
           <tr>
@@ -37,42 +67,45 @@ export default function ListHome() {
             <td>Image</td>
             <td>Action</td>
           </tr>
-          {homes !== undefined &&
-            homes.map((item, key) => (
-              <tr>
-                <td>{key + 1}</td>
-                <td>{item.nameHome}</td>
-                <td>{item.address}</td>
-                <td>{item.description}</td>
-                <td>{item.price}</td>
-                <td>{item.count}</td>
-                <td>{item.nameCategory}</td>
-                <td>
-                  <img src={item.image} alt="" />
-                </td>
-                <td>
-                  <button
-                    onClick={() => {
-                      swal({
-                        title: "Are you sure?",
-                        text: "!!!",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                      }).then((willDelete) => {
-                        if (willDelete) {
-                          dispatch(deleteHome(item.idHome)).then(() => {
-                            dispatch(getHomes(page1)).then(() => {
-                              navigate("/home?page=" + page1);
+          {
+            search ? 
+            <>
+              { search !== undefined &&
+              search.map((item, key) => (
+                <tr>
+                  <td>{key + 1}</td>
+                  <td>{item.nameHome}</td>
+                  <td>{item.address}</td>
+                  <td>{item.description}</td>
+                  <td>{item.price}</td>
+                  <td>{item.count}</td>
+                  <td>{item.nameCategory}</td>
+                  <td>
+                    <img src={item.image} alt="" />
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        swal({
+                          title: "Are you sure?",
+                          text: "!!!",
+                          icon: "warning",
+                          buttons: true,
+                          dangerMode: true,
+                        }).then((willDelete) => {
+                          if (willDelete) {
+                            dispatch(deleteHome(item.idHome)).then(() => {
+                              dispatch(getHomes(page1)).then(() => {
+                                navigate("/home?page=" + page1);
+                              });
                             });
-                          });
-                          swal("Delete Success!!", {
-                            icon: "success",
-                          });
-                        } else {
-                          swal("Please try again!");
-                        }
-                      });
+                            swal("Delete Success!!", {
+                              icon: "success",
+                            });
+                          } else {
+                            swal("Please try again!");
+                          }
+                        });
                     }}
                   >
                     Delete
@@ -83,6 +116,59 @@ export default function ListHome() {
                 </td>
               </tr>
             ))}
+            </>
+            :
+            <>
+              { homes !== undefined &&
+              homes.map((item, key) => (
+                <tr>
+                  <td>{key + 1}</td>
+                  <td>{item.nameHome}</td>
+                  <td>{item.address}</td>
+                  <td>{item.description}</td>
+                  <td>{item.price}</td>
+                  <td>{item.count}</td>
+                  <td>{item.nameCategory}</td>
+                  <td>
+                    <img src={item.image} alt="" />
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        swal({
+                          title: "Are you sure?",
+                          text: "!!!",
+                          icon: "warning",
+                          buttons: true,
+                          dangerMode: true,
+                        }).then((willDelete) => {
+                          if (willDelete) {
+                            dispatch(deleteHome(item.idHome)).then(() => {
+                              dispatch(getHomes(page1)).then(() => {
+                                navigate("/home?page=" + page1);
+                              });
+                            });
+                            swal("Delete Success!!", {
+                              icon: "success",
+                            });
+                          } else {
+                            swal("Please try again!");
+                          }
+                        });
+                      }}
+                    >
+                      Delete
+                    </button>
+                    <Link to={`edit-home/${item.idHome}`}>
+                      <button>Edit</button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </>
+          }
+          
+          
         </table>
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-center">

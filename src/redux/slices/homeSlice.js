@@ -5,11 +5,13 @@ import {
   editHome,
   getHomeById,
   getHomes,
+  searchHome,
 } from "../../service/homeService";
 
 const initialState = {
   homes: [],
   home: {},
+  searchHome: [],
 };
 
 const homeSlice = createSlice({
@@ -31,6 +33,9 @@ const homeSlice = createSlice({
     });
     builder.addCase(deleteHome.fulfilled, (state, action) => {
       state.homes.homes.splice(action.payload, 1);
+    });
+    builder.addCase(searchHome.fulfilled, (state, action) => {
+      state.searchHome = action.payload;
     });
   },
 });
