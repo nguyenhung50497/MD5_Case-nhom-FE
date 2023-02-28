@@ -84,7 +84,6 @@ export default function EditHome() {
   const { id } = useParams();
 
   const home = useSelector((state) => {
-    console.log(state.homes.home);
     return state.homes.home;
   });
   useEffect(() => {

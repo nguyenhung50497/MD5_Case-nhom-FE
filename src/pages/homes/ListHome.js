@@ -62,8 +62,8 @@ export default function ListHome() {
                       }).then((willDelete) => {
                         if (willDelete) {
                           dispatch(deleteHome(item.idHome)).then(() => {
-                            dispatch(getHomes()).then(() => {
-                              navigate("/home");
+                            dispatch(getHomes(page1)).then(() => {
+                              navigate("/home?page=" + page1);
                             });
                           });
                           swal("Delete Success!!", {
