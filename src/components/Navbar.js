@@ -8,7 +8,7 @@ export default function Navbar() {
   return (
     <>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <Link class="navbar-brand" to="/home/albums">
+        <Link class="navbar-brand" to="/home">
           Home
         </Link>
         <button
@@ -36,8 +36,8 @@ export default function Navbar() {
                 Add
               </a>
               <div class="dropdown-menu">
-                <Link class="dropdown-item" to="/home/create-album">
-                  Album
+                <Link class="dropdown-item" to="create-home">
+                  Home
                 </Link>
                 <Link class="dropdown-item" to="/home/create-song">
                   Song

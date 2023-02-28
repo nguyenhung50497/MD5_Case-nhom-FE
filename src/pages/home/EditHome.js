@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { storage } from "../../upload/firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-import { addHome } from "../../service/homeService";
+import { addHome, editHome, getHomeById } from "../../service/homeService";
 import { getCategories } from "../../service/categoryService";
 const validateSchema = Yup.object().shape({
   nameHome: Yup.string()
@@ -28,7 +28,7 @@ const validateSchema = Yup.object().shape({
     .required("Required"),
 });
 
-export default function CreateHome() {
+export default function EditHome() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => {
@@ -47,10 +47,7 @@ export default function CreateHome() {
       setImages((prevState) => [...prevState, newImage]);
     }
   };
-  useEffect(() => {
-    console.log(1);
-    dispatch(getCategories());
-  }, []);
+
   const handleUpload = () => {
     const promises = [];
     if (images.length > 0) {
@@ -72,7 +69,8 @@ export default function CreateHome() {
           async () => {
             await getDownloadURL(uploadTask.snapshot.ref).then(
               (downloadURLs) => {
-                setUrls((prevState) => [...prevState, downloadURLs]);
+                setUrls("");
+                setUrls(downloadURLs);
               }
             );
           }
@@ -83,35 +81,47 @@ export default function CreateHome() {
       .then(() => alert("All images uploaded"))
       .catch((err) => console.log(err));
   };
-  const handleCreateHome = (values) => {
-    console.log(1, values);
-    let idUser = user.idUser;
-    let data = { ...values, image: urls[0], idUser: idUser };
-    console.log(1, data);
-    dispatch(addHome(data)).then((value) => {
-      alert("Create Success !!!");
+  const { id } = useParams();
+
+  const home = useSelector((state) => {
+    console.log(state.homes.home);
+    return state.homes.home;
+  });
+  useEffect(() => {
+    dispatch(getHomeById(id)).then((e) => {
+      setUrls(e.payload.image);
+    });
+  }, []);
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
+  const handleEdit = (values) => {
+    let data = [{ ...values, image: urls }, id];
+    dispatch(editHome(data)).then((value) => {
+      alert("Edit Success !!!");
       navigate("/home");
     });
   };
-  console.log(categories);
+  console.log(2, urls);
   return (
     <div className="row">
       <div className="col-8 offset-3">
-        <h1 className="text-center">Add Home</h1>
+        <h1 className="text-center">Edit Home</h1>
         <div className="row">
           <div className="col-7">
             <Formik
               initialValues={{
-                nameHome: "",
-                address: "",
-                description: "",
-                price: "",
-                idCategory: "",
+                nameHome: home.nameHome,
+                address: home.address,
+                description: home.description,
+                price: home.price,
+                idCategory: home.idCategory,
               }}
               validationSchema={validateSchema}
               onSubmit={(values) => {
-                handleCreateHome(values);
+                handleEdit(values).then(navigate("home"));
               }}
+              enableReinitialize={true}
             >
               <Form>
                 <div className="form-group">
@@ -200,14 +210,14 @@ export default function CreateHome() {
                 </div>
                 <div>
                   <button type="submit" className="btn btn-primary ml-3">
-                    Add
+                    Edit
                   </button>
                 </div>
               </Form>
             </Formik>
           </div>
           <div className="col-5">
-            <img className="mt-1" src={urls[0]} alt={urls[0]} />
+            <img className="mt-1" src={urls} alt={urls} />
           </div>
         </div>
       </div>
