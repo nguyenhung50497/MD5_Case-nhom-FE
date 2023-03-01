@@ -73,7 +73,7 @@ export default function ListHome() {
                                 <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                   <div className="property-item rounded overflow-hidden">
                                       <div className="position-relative overflow-hidden">
-                                          <a href=""><img className="img-fluid" src={item.image} style={{height: "400px", width: "100%"}} alt=""/></a>
+                                          <Link to={''}><img className="img-fluid" src={item.image} style={{height: "400px", width: "100%"}} alt=""/></Link>
                                           { user.idUser === item.idUser &&
                                             <>
                                               <button className="btn-danger rounded text-white position-absolute start-0 top-0 m-1 py-1 px-2"
@@ -110,12 +110,17 @@ export default function ListHome() {
                                               </Link>
                                             </>
                                           }
-                                          <div className="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{item.nameHome}</div>
+                                          <Link to={''} className="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{item.nameHome}</Link>
                                       </div>
                                       <div className="p-4 pb-0">
                                           <h5 className="text-primary mb-3">${item.price}</h5>
-                                          <a className="d-block h5 mb-2" href="">{item.description}</a>
+                                          <div className="d-block h5 mb-2">{item.description}</div>
                                           <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
+                                          {
+                                            item.status === "For rent" ? <Link to={`rent-home/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
+                                            :
+                                            <button className="btn btn-warning w-100 mb-3">Rented</button>
+                                          }
                                       </div>
                                       <div className="d-flex border-top">
                                           <small className="flex-fill text-center border-end py-2"><i className="fa fa-ruler-combined text-primary me-2"></i>{item.floorArea} m<sup>2</sup></small>
@@ -133,7 +138,7 @@ export default function ListHome() {
                                 <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                   <div className="property-item rounded overflow-hidden">
                                       <div className="position-relative overflow-hidden">
-                                          <a href=""><img className="img-fluid" src={item.image} style={{height: "400px", width: "100%"}} alt=""/></a>
+                                          <Link to={''}><img className="img-fluid" src={item.image} style={{height: "400px", width: "100%"}} alt=""/></Link>
                                           { user.idUser === item.idUser &&
                                             <>
                                               <button className="btn-danger rounded text-white position-absolute start-0 top-0 m-1 py-1 px-2"
@@ -170,13 +175,17 @@ export default function ListHome() {
                                               </Link>
                                             </>
                                           }
-                                          <div className="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{item.nameHome}</div>
+                                          <Link to={''} className="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{item.nameHome}</Link>
                                       </div>
                                       <div className="p-4 pb-0">
                                           <h5 className="text-primary mb-3">${item.price}</h5>
-                                          <a className="d-block h5 mb-2" href="">{item.description}</a>
+                                          <div className="d-block h5 mb-2">{item.description}</div>
                                           <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
-                                          <Link to={`rent-home/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
+                                          {
+                                            item.status === "For rent" ? <Link to={`rent-home/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
+                                            :
+                                            <button className="btn btn-warning w-100 mb-3">Rented</button>
+                                          }
                                       </div>
                                       <div className="d-flex border-top">
                                           <small className="flex-fill text-center border-end py-2"><i className="fa fa-ruler-combined text-primary me-2"></i>{item.floorArea} m<sup>2</sup></small>

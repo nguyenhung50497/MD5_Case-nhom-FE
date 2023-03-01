@@ -37,9 +37,11 @@ export default function EditHome() {
     return state.categories.categories;
   });
   const { id } = useParams();
-
   const home = useSelector((state) => {
     return state.homes.home;
+  });
+  const loading = useSelector((state) => {
+    return state.homes.loading
   });
   const [images, setImages] = useState([]);
   const [urls, setUrls] = useState([]);
@@ -103,6 +105,16 @@ export default function EditHome() {
   return (
     <div className="row">
       <div class="container-xxl py-5">
+        {
+          loading === false ?
+          <>
+            <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                <div className="spinner-border text-primary" style={{width: "3rem", height: "3rem"}} role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+          </>
+          :
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "600px"}}>
                     <h1 class="mb-3">Edit Home</h1>
@@ -229,6 +241,7 @@ export default function EditHome() {
                     </div>
                 </div>
             </div>
+        }
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ export default function Team() {
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
-                                <img class="img-fluid" src="img/team-0.jpg" alt="" style={{height: '300px'}}/>
+                                <img class="img-fluid" src="/img/team-0.jpg" alt="" style={{height: '300px'}}/>
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
@@ -26,7 +26,7 @@ export default function Team() {
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
-                                <img class="img-fluid" src="img/team-1.jpg" alt="" style={{height: '300px'}}/>
+                                <img class="img-fluid" src="/img/team-1.jpg" alt="" style={{height: '300px'}}/>
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
@@ -42,7 +42,7 @@ export default function Team() {
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
-                                <img class="img-fluid" src="img/team-2.jpg" alt="" style={{height: '300px'}}/>
+                                <img class="img-fluid" src="/img/team-2.jpg" alt="" style={{height: '300px'}}/>
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                                     <a class="btn btn-square mx-1" href="https://www.facebook.com/nguyenhung50497/" target="_blank"><i class="fab fa-facebook-f"></i></a>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
@@ -58,7 +58,7 @@ export default function Team() {
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                         <div class="team-item rounded overflow-hidden">
                             <div class="position-relative">
-                                <img class="img-fluid" src="img/team-3.jpg" alt="" style={{height: '300px'}}/>
+                                <img class="img-fluid" src="/img/team-3.jpg" alt="" style={{height: '300px'}}/>
                                 <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                                     <a class="btn btn-square mx-1" href="https://www.facebook.com/moonie2301" target="_blank"><i class="fab fa-facebook-f"></i></a>
                                     <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
