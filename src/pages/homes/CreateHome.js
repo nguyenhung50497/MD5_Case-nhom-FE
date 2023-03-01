@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -22,10 +22,6 @@ const validateSchema = Yup.object().shape({
     .min(2, "Too short!")
     .max(50, "Too long!")
     .required("Required"),
-  price: Yup.string()
-    .min(2, "Too short!")
-    .max(50, "Too long!")
-    .required("Required"),
 });
 
 export default function CreateHome() {
@@ -40,6 +36,7 @@ export default function CreateHome() {
   const [images, setImages] = useState([]);
   const [urls, setUrls] = useState([]);
   const [progress, setProgress] = useState(0);
+
   const handleChange = (e) => {
     for (let i = 0; i < e.target.files.length; i++) {
       const newImage = e.target.files[i];
@@ -47,9 +44,7 @@ export default function CreateHome() {
       setImages((prevState) => [...prevState, newImage]);
     }
   };
-  useEffect(() => {
-    dispatch(getCategories());
-  }, []);
+
   const handleUpload = () => {
     const promises = [];
     if (images.length > 0) {
@@ -82,6 +77,7 @@ export default function CreateHome() {
       .then(() => swal("All images uploaded"))
       .catch((err) => console.log(err));
   };
+
   const handleCreateHome = (values) => {
     let idUser = user.idUser;
     let data = { ...values, image: urls[0], idUser: idUser };
@@ -90,123 +86,138 @@ export default function CreateHome() {
       navigate("/home");
     });
   };
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
   return (
     <div className="row">
-      <div className="col-8 offset-3">
-        <h1 className="text-center">Add Home</h1>
-        <div className="row">
-          <div className="col-7">
-            <Formik
-              initialValues={{
-                nameHome: "",
-                address: "",
-                description: "",
-                price: "",
-                idCategory: "",
-              }}
-              validationSchema={validateSchema}
-              onSubmit={(values) => {
-                handleCreateHome(values);
-              }}
-            >
-              <Form>
-                <div className="form-group">
-                  <label htmlFor="nameHome">Name Home</label>
-                  <Field
-                    type="text"
-                    name={"nameHome"}
-                    className="form-control"
-                    id="nameHome"
-                  />
-                  <alert className="text-danger">
-                    <ErrorMessage name={"nameHome"}></ErrorMessage>
-                  </alert>
+      <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "600px"}}>
+                    <h1 class="mb-3">Create Home</h1>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="address">Address</label>
-                  <Field
-                    type="text"
-                    name={"address"}
-                    className="form-control"
-                    id="address"
-                  />
-                  <alert className="text-danger">
-                    <ErrorMessage name={"address"}></ErrorMessage>
-                  </alert>
+                <div class="row g-4">
+                    <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
+                          <img className="position-relative rounded w-100 h-100" src={urls[0]} alt={urls[0]} />
+                    </div>
+                    <div class="col-md-8">
+                        <div class="wow fadeInUp" data-wow-delay="0.5s">
+                            <Formik
+                              initialValues={{
+                                nameHome: "",
+                                address: "",
+                                description: "",
+                                price: "",
+                                floorArea: "",
+                                bedrooms: "",
+                                bathrooms: "",
+                                idCategory: "",
+                              }}
+                              validationSchema={validateSchema}
+                              onSubmit={(values) => {
+                                handleCreateHome(values);
+                              }}
+                            >
+                            <Form>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <Field type="text" class="form-control" name={'nameHome'} id="nameHome" placeholder="Home"/>
+                                            <label for="nameHome">Home</label>
+                                            <alert className="text-danger">
+                                              <ErrorMessage name={"nameHome"}></ErrorMessage>
+                                            </alert>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <Field type="text" class="form-control" name={'address'} id="address" placeholder="Address"/>
+                                            <label for="address">Address</label>
+                                            <alert className="text-danger">
+                                              <ErrorMessage name={"address"}></ErrorMessage>
+                                            </alert>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <Field type="text" class="form-control" name={'description'} id="description" placeholder="Description"/>
+                                            <label for="description">Description</label>
+                                            <alert className="text-danger">
+                                              <ErrorMessage name={"description"}></ErrorMessage>
+                                            </alert>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <Field type="number" class="form-control" name={'price'} id="price" placeholder="Price"/>
+                                            <label for="price">Price</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-floating">
+                                            <Field type="number" class="form-control" name={'floorArea'} id="floorArea" placeholder="Floor Area"/>
+                                            <label for="floorArea">Floor Area</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-floating">
+                                            <Field type="number" class="form-control" name={'bedrooms'} id="bedrooms" placeholder="Number of Bedrooms"/>
+                                            <label for="bedrooms">Number of Bedrooms</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-floating">
+                                            <Field type="number" class="form-control" name={'bathrooms'} id="bathrooms" placeholder="Number of Bathrooms"/>
+                                            <label for="bathrooms">Number of Bathrooms</label>
+                                        </div>
+                                    </div>
+                                    <div className="col-12">
+                                        <Field
+                                          as="select"
+                                          name={"idCategory"}
+                                          className="form-control"
+                                          id="idCategory"
+                                        >
+                                          <option selected>Category</option>
+                                          {categories !== undefined &&
+                                            categories.map((item, index) => (
+                                              <option value={item.idCategory}>
+                                                {item.nameCategory}
+                                              </option>
+                                            ))}
+                                        </Field>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <label for="exampleFormControlFile1">
+                                        <strong>Upload Image Here</strong>
+                                      </label>
+                                      <input
+                                        type="file"
+                                        class="form-control-file"
+                                        id="exampleFormControlFile1"
+                                        multiple
+                                        onChange={handleChange}
+                                      />
+                                    </div>
+                                    <div class="col-md-6">
+                                      <button
+                                        type="button"
+                                        className="btn btn-secondary w-100 py-3"
+                                        onClick={() => dispatch(handleUpload)}
+                                      >
+                                        Upload
+                                      </button>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">Add</button>
+                                    </div>
+                                </div>
+                            </Form>
+                            </Formik>
+                        </div>
+                    </div>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="description">description</label>
-                  <Field
-                    type="text"
-                    name={"description"}
-                    className="form-control"
-                    id="description"
-                  />
-                  <alert className="text-danger">
-                    <ErrorMessage name={"description"}></ErrorMessage>
-                  </alert>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="price">price</label>
-                  <Field
-                    type="text"
-                    name={"price"}
-                    className="form-control"
-                    id="price"
-                  />
-                  <alert className="text-danger">
-                    <ErrorMessage name={"price"}></ErrorMessage>
-                  </alert>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="idCategory">Category</label>
-                  <Field
-                    as="select"
-                    name={"idCategory"}
-                    className="form-control"
-                    id="idCategory"
-                  >
-                    <option selected>Category</option>
-                    {categories !== undefined &&
-                      categories.map((item, index) => (
-                        <option value={item.idCategory}>
-                          {item.nameCategory}
-                        </option>
-                      ))}
-                  </Field>
-                </div>
-                <div class="form-group">
-                  <label for="exampleFormControlFile1">
-                    <strong>Upload Home Image Here</strong>
-                  </label>
-                  <input
-                    type="file"
-                    class="form-control-file"
-                    id="exampleFormControlFile1"
-                    multiple
-                    onChange={handleChange}
-                  />
-                  <br />
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => dispatch(handleUpload)}
-                  >
-                    Upload
-                  </button>
-                </div>
-                <div>
-                  <button type="submit" className="btn btn-primary ml-3">
-                    Add
-                  </button>
-                </div>
-              </Form>
-            </Formik>
-          </div>
-          <div className="col-5">
-            <img className="mt-1" src={urls[0]} alt={urls[0]} />
-          </div>
-        </div>
+            </div>
       </div>
     </div>
   );

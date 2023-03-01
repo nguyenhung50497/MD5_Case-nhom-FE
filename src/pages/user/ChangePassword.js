@@ -39,54 +39,52 @@ export default function ChangePassword() {
 
     return(
         <>
-            <div className="row">
-                <div className="col-8 offset-3">
-                    <h1 className="text-center">Change Password</h1>
-                    <div className="row">
-                        <div className="col-7">
-                            <Formik
-                                initialValues={{
-                                    oldPassword: '',
-                                    newPassword: ''
-                                }}
-                                validationSchema={validateSchema}
-                                onSubmit={(values) => {
-                                    handleEdit(values)
-                                }}
-                                enableReinitialize={true}
-                            >
+            <div class="container-xxl py-5">
+                <div class="container">
+                    <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "600px"}}>
+                        <h1 class="mb-3">Edit Profile</h1>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-8 offset-2">
+                            <div class="wow fadeInUp" data-wow-delay="0.5s">
+                                <Formik
+                                    initialValues={{
+                                        oldPassword: '',
+                                        newPassword: ''
+                                    }}
+                                    validationSchema={validateSchema}
+                                    onSubmit={(values) => {
+                                        handleEdit(values)
+                                    }}
+                                    enableReinitialize={true}
+                                >
                                 <Form>
-                                    <div className="form-group">
-                                        <label htmlFor="oldPassword">Old Password</label>
-                                        <Field
-                                            type="password"
-                                            name={"oldPassword"}
-                                            className="form-control"
-                                            id="oldPassword"
-                                        />
-                                        <alert className="text-danger">
-                                            <ErrorMessage name={"oldPassword"}></ErrorMessage>
-                                        </alert>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="newPassword">New Password</label>
-                                        <Field
-                                            type="password"
-                                            name={"newPassword"}
-                                            className="form-control"
-                                            id="newPassword"
-                                        />
-                                        <alert className="text-danger">
-                                            <ErrorMessage name={"newPassword"}></ErrorMessage>
-                                        </alert>
-                                    </div>
-                                    <div>
-                                        <button type="submit" className="btn btn-primary ml-3">
-                                            Edit
-                                        </button>
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <div class="form-floating">
+                                                <Field type="password" class="form-control" name={'oldPassword'} id="oldPassword" placeholder="Old Password"/>
+                                                <label for="oldPassword">Old Password</label>
+                                                <alert className="text-danger">
+                                                <ErrorMessage name={"oldPassword"}></ErrorMessage>
+                                                </alert>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-floating">
+                                                <Field type="password" class="form-control" name={'newPassword'} id="newPassword" placeholder="New Password"/>
+                                                <label for="newPassword">New Password</label>
+                                                <alert className="text-danger">
+                                                <ErrorMessage name={"newPassword"}></ErrorMessage>
+                                                </alert>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn btn-primary w-100 py-3" type="submit">Save changes</button>
+                                        </div>
                                     </div>
                                 </Form>
-                            </Formik>
+                                </Formik>
+                            </div>
                         </div>
                     </div>
                 </div>

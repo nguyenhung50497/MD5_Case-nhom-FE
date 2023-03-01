@@ -13,7 +13,7 @@ export default function Home() {
                 <Team></Team>
                 <Footer></Footer>
             </div>
-            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+            <a href="#" className="btn btn-lg btn-primary btn-lg-square back-to-top"><i className="bi bi-arrow-up"></i></a>
         </div>
     )
 }

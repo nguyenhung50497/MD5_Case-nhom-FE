@@ -20,8 +20,9 @@ function App() {
           <Route path={""} element={<Login></Login>}></Route>
           <Route path={"register"} element={<Register></Register>}></Route>
           <Route path={"home"} element={<Home />}>
-            <Route path={""} element={<ListHome></ListHome>}></Route>
-            <Route path={"create-home"} element={<CreateHome></CreateHome>} />
+            <Route path={""} element={<ListHome/>}>
+            </Route>
+            <Route path={"create-home"} element={<CreateHome/>}/>
             <Route path={"edit-home/:id"} element={<EditHome />}></Route>
             <Route path={"delete-home/:id"}></Route>
           </Route>
@@ -29,16 +30,6 @@ function App() {
             <Route path={":idUser"} element={<Profile/>}></Route>
             <Route path={"change-password/:idUser"} element={<ChangePassword/>}></Route>
           </Route>
-
-          {/* {
-                        user !== "User not found" && user !== "Wrong password" ? 
-                        <Route path={'home'} element={<Home/>}>
-                            <Route path={'albums'} element={<ListHome/>}></Route>
-                            <Route path={'create-album'} element={<CreateHome/>}></Route>
-                            <Route path={'edit-album/:id'} element={<EditHome/>}></Route>
-                        </Route> :
-                        <Route path={'*'} element={<Login></Login>}></Route>
-                    } */}
         </Routes>
       </div>
     </>
