@@ -10,7 +10,7 @@ const store = configureStore({
     user: userReducer,
     homes: homeReducer,
     categories: categoryReducer,
-    orders: orderDetailReducer,
+    orderDetails: orderDetailReducer,
   },
 });
 

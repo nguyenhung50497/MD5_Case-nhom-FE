@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getOrderDetails, rentHome } from "../../service/orderDetailService";
+import { getOrderDetails, getOrderDetailsByIdUser, rentHome } from "../../service/orderDetailService";
 
 const initialState = {
   orderDetails: [],
@@ -17,6 +17,10 @@ const orderDetailSlice = createSlice({
     });
     builder.addCase(rentHome.fulfilled, (state, action) => {
       state.orderDetails.push(action.payload);
+    });
+    builder.addCase(getOrderDetailsByIdUser.fulfilled, (state, action) => {
+      state.orderDetails = action.payload;
+      state.loading = false;
     });
     // builder.addCase(editHome.fulfilled, (state, action) => {
     //   state.homes.homes.splice(action.payload.idHome, 1, action.payload);

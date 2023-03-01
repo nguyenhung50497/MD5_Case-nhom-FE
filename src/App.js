@@ -12,6 +12,7 @@ import User from "./pages/home/User";
 import ChangePassword from "./pages/user/ChangePassword";
 import RentHome from "./pages/homes/RentHome";
 import HomeDetail from "./pages/homes/HomeDetail";
+import MyOrder from "./pages/user/myOrder";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
@@ -31,6 +32,7 @@ function App() {
           <Route path={"user"} element={<User/>}>
             <Route path={":idUser"} element={<Profile/>}></Route>
             <Route path={"change-password/:idUser"} element={<ChangePassword/>}></Route>
+            <Route path={"my-order/:idUser"} element={<MyOrder/>}></Route>
           </Route>
         </Routes>
       </div>

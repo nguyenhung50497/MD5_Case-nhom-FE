@@ -46,18 +46,13 @@ export default function Navbar() {
                         <Link to="/home" className="nav-item nav-link active">Home</Link>
                         <Link to="create-home" className="nav-item nav-link">Create Home</Link>
                         <div className="nav-item dropdown">
-                            <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
-                            <div className="dropdown-menu rounded-0 m-0">
-                                <a href="property-list.html" className="dropdown-item">Property List</a>
-                                <a href="property-type.html" className="dropdown-item">Property Type</a>
-                                <a href="property-agent.html" className="dropdown-item">Property Agent</a>
-                            </div>
-                        </div>
-                        <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">{user.username}</a>
                             <div className="dropdown-menu rounded-0 m-0">
                                 <Link className="dropdown-item" to={`/user/${user.idUser}`}>
                                   Profile
+                                </Link>
+                                <Link className="dropdown-item" to={`/user/my-order/${user.idUser}`}>
+                                  My Order
                                 </Link>
                                 <Link className="dropdown-item" to={`/user/change-password/${user.idUser}`}>
                                   Change Password

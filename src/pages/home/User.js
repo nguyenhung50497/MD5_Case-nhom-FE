@@ -1,6 +1,8 @@
 
 import Navbar from "../../components/Navbar";
 import { Outlet } from "react-router-dom";
+import Team from "../../components/Team";
+import Footer from "../../components/Footer";
 
 export default function User() {
     return (
@@ -9,6 +11,8 @@ export default function User() {
                 <Navbar></Navbar>
                 <hr/>
                 <Outlet></Outlet>
+                <Team></Team>
+                <Footer></Footer>
             </div>
         </div>
     )

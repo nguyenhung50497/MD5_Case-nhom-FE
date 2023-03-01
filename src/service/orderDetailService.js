@@ -22,3 +22,14 @@ export const rentHome = createAsyncThunk(
     }});
     return res.data;
 });
+
+export const getOrderDetailsByIdUser = createAsyncThunk(
+  "homes/getOrderDetailsByIdUser",
+  async (data) => {
+  const res = await customAxios.get("orderDetails/my-order-detail/" + data,
+  { headers: {
+    'Content-Type': 'application/json',
+    authorization: 'Bearer ' + localStorage.getItem('access-token'),
+  }});
+  return res.data;
+});
