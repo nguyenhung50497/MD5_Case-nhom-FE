@@ -102,7 +102,8 @@ export default function EditHome() {
     });
   };
   return (
-    <div className="row">
+    <div className="row"
+    >
       <div className="col-8 offset-3">
         <h1 className="text-center">Edit Home</h1>
         <div className="row">
