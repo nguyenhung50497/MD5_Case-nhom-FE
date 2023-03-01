@@ -36,13 +36,13 @@ export const deleteHome = createAsyncThunk("homes/deleteHome", async (data) => {
 export const searchHome = createAsyncThunk(
     "homes/searchHome",
     async (data) => {
-      const res = await customAxios.get('/homes/find-by-address?address=' + data,
+      const res = await customAxios.get('/homes/find-by-address?address=' + data[1] + '&page=' + data[0],
       { headers: {
          'Content-Type': 'application/json',
          authorization: 'Bearer ' + localStorage.getItem('access-token'),
      }})
     return res.data;
-  })
+})
 
 export const editHome = createAsyncThunk(
     "homes/editHome",
@@ -54,4 +54,3 @@ export const editHome = createAsyncThunk(
     }});
     return res.data;
 });
-

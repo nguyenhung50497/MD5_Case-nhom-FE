@@ -11,6 +11,7 @@ import Profile from "./pages/user/profile";
 import User from "./pages/home/User";
 import ChangePassword from "./pages/user/ChangePassword";
 import RentHome from "./pages/homes/RentHome";
+import HomeDetail from "./pages/homes/HomeDetail";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
@@ -25,6 +26,7 @@ function App() {
             <Route path={"create-home"} element={<CreateHome/>}/>
             <Route path={"edit-home/:id"} element={<EditHome/>}/>
             <Route path={"rent-home/:id"} element={<RentHome/>}/>
+            <Route path={"home-detail/:id"} element={<HomeDetail/>}/>
           </Route>
           <Route path={"user"} element={<User/>}>
             <Route path={":idUser"} element={<Profile/>}></Route>

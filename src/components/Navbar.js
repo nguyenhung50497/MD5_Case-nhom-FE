@@ -1,14 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { searchHome } from "../service/homeService";
 
 export default function Navbar() {
+  const [page, setPage] = useSearchParams();
+  const page1 = page.get("page") || 1;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
+  const totalPages = useSelector((state) => {
+    if (state.homes.homes !== undefined) {
+      return state.homes.homes.totalPage;
+    }
+  });
   const handleSearch = (value) => {
-    dispatch(searchHome(value))
+    dispatch(searchHome([page1, value]))
   }
   return (
     <>
@@ -57,7 +64,7 @@ export default function Navbar() {
                                 </Link>
                                 <a className="btn dropdown-item text-danger" 
                                   onClick={() => {
-                                    localStorage.removeItem("accessToken");
+                                    localStorage.removeItem("access-token");
                                     localStorage.clear();
                                     navigate("/");
                                   }}>Logout</a>

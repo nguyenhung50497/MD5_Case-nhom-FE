@@ -12,6 +12,8 @@ const initialState = {
   homes: [],
   home: [],
   searchHome: [],
+  address:'',
+  orderDetails: [],
   loading: true
 };
 
@@ -40,6 +42,7 @@ const homeSlice = createSlice({
       state.homes.homes.splice(action.payload, 1);
     });
     builder.addCase(searchHome.fulfilled, (state, action) => {
+      state.address = action.payload.address
       state.searchHome = action.payload;
     });
   },

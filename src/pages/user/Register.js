@@ -65,13 +65,13 @@ export default function Register() {
   };
 
   const handleRegister = (values) => {
-    console.log(1, values);
     let data = { ...values, avatar: urls[0] };
     dispatch(register(data)).then((value) => {
       if (value.payload === "Username already registered") {
         swal("Username already registered");
         navigate("/register");
       } else {
+        swal("Register successfully")
         navigate("/");
       }
     });
