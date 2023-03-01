@@ -4,9 +4,9 @@ import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {storage} from "../../upload/firebaseConfig";
 import {useNavigate, useParams} from "react-router-dom";
 import {editProfile, getProfile} from "../../service/userService";
-import {editHome} from "../../service/homeService";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
+import swal from "sweetalert";
 const validateSchema = Yup.object().shape({
     username: Yup.string()
         .min(2, "Too short!")
@@ -61,7 +61,7 @@ export default function Profile(){
             });
         }
         Promise.all(promises)
-            .then(() => alert("All images uploaded"))
+            .then(() => swal("All images uploaded"))
             .catch((err) => console.log(err));
     };
     const { idUser } = useParams();
@@ -73,77 +73,78 @@ export default function Profile(){
     const handleEdit = (values) => {
         let data = [{ ...values, avatar: urls }, idUser];
         dispatch(editProfile(data)).then((value) => {
-            alert("Edit Success !!!");
+            swal("Edit Success !!!");
             navigate("/home");
         });
     };
     return(
         <>
-            <div className="row">
-                <h1 className="text-center">Edit Profile</h1>
-                <div className="col-9 offset-2">
-                    <div className="row">
-                        <div className="col-7">
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "600px"}}>
+                    <h1 class="mb-3">Edit Profile</h1>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-8">
+                        <div class="wow fadeInUp" data-wow-delay="0.5s">
                             <Formik
-                                initialValues={{
-                                    username: user.username,
-                                    avatar: user.avatar,
-                                }}
-                                validationSchema={validateSchema}
-                                onSubmit={(values) => {
-                                    handleEdit(values).then(
-                                        navigate("home"));
-                                }}
-                                enableReinitialize={true}
+                              initialValues={{
+                                username: user.username,
+                                avatar: user.avatar,
+                            }}
+                            validationSchema={validateSchema}
+                            onSubmit={(values) => {
+                                handleEdit(values).then(
+                                    navigate("home"));
+                            }}
+                            enableReinitialize={true}
                             >
-                                <Form>
-                                    <div className="form-group">
-                                        <label htmlFor="username">Username</label>
-                                        <Field
-                                            type="text"
-                                            name={"username"}
-                                            className="form-control"
-                                            id="username"
-                                        />
-                                        <alert className="text-danger">
-                                            <ErrorMessage name={"username"}></ErrorMessage>
-                                        </alert>
+                            <Form>
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <Field type="text" class="form-control" name={'username'} id="username" placeholder="Home"/>
+                                            <label for="username">Username</label>
+                                            <alert className="text-danger">
+                                              <ErrorMessage name={"username"}></ErrorMessage>
+                                            </alert>
+                                        </div>
                                     </div>
-                                    <div className="form-group">
-                                        <label htmlFor="exampleFormControlFile1">
-                                            <strong>Upload Avatar Here</strong>
-                                        </label>
-                                        <input
-                                            type="file"
-                                            className="form-control-file"
-                                            id="exampleFormControlFile1"
-                                            multiple
-                                            onChange={handleChange}
-                                        />
-                                        <br/>
-                                        <button
-                                            type="button"
-                                            className="btn btn-secondary"
-                                            onClick={() =>
-                                                dispatch(handleUpload)}
-                                        >
-                                            Upload
-                                        </button>
+                                    <div class="col-md-6">
+                                      <label for="exampleFormControlFile1">
+                                        <strong>Upload Image Here</strong>
+                                      </label>
+                                      <input
+                                        type="file"
+                                        class="form-control-file"
+                                        id="exampleFormControlFile1"
+                                        multiple
+                                        onChange={handleChange}
+                                      />
                                     </div>
-                                    <div>
-                                        <button type="submit" className="btn btn-primary ml-3">
-                                            Edit
-                                        </button>
+                                    <div class="col-md-6">
+                                      <button
+                                        type="button"
+                                        className="btn btn-secondary w-100 py-3"
+                                        onClick={() => dispatch(handleUpload)}
+                                      >
+                                        Upload
+                                      </button>
                                     </div>
-                                </Form>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">Save changes</button>
+                                    </div>
+                                </div>
+                            </Form>
                             </Formik>
                         </div>
-                        <div className="col-5">
-                            <img className="mt-1" src={urls} alt={urls}/>
-                        </div>
+                    </div>
+                    <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
+                          <img className="position-relative rounded w-100 h-100" src={urls} alt={urls} />
                     </div>
                 </div>
             </div>
+        </div>
         </>
     )
 }

@@ -16,7 +16,7 @@ const userSlice = createSlice({
         builder.addCase(login.fulfilled, (state, action) => {
             state.currentUser = action.payload;
             localStorage.setItem("user", JSON.stringify(action.payload))
-            localStorage.setItem("accessToken", action.payload.token)
+            localStorage.setItem("access-token", action.payload.token)
         });
         builder.addCase(register.fulfilled, (state, action) => {
             state.user.push(action.payload)
@@ -24,7 +24,7 @@ const userSlice = createSlice({
         builder.addCase(editProfile.fulfilled, (state, action) => {
             state.currentUser = action.payload;
             localStorage.setItem("user", JSON.stringify(action.payload))
-            localStorage.setItem("accessToken", action.payload.token)
+            localStorage.setItem("access-token", action.payload.token)
         });
         builder.addCase(getProfile.fulfilled, (state, action) => {
             state.profile = action.payload;

@@ -1,11 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router";
-import { deleteHome, getHomes, searchHome } from "../../service/homeService";
+import { deleteHome, getHomes } from "../../service/homeService";
 import { useEffect } from "react";
-
 import swal from "sweetalert";
-import { Field, Form, Formik } from "formik";
 
 export default function ListHome() {
   const [page, setPage] = useSearchParams();
@@ -15,6 +13,7 @@ export default function ListHome() {
   const homes = useSelector((state) => {
     return state.homes.homes.homes;
   });
+  const loading = useSelector(state => state.homes.loading)
   const user = useSelector(state => state.user.currentUser);
   let search = useSelector((state) => {
     return state.homes.searchHome.homes;
@@ -25,17 +24,28 @@ export default function ListHome() {
     }
   });
   useEffect(() => {
-    dispatch(getHomes(page1))
+    dispatch(getHomes(1))
   }, []);
   return (
     <>
+    {
+      loading === true ?
+      <>
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div className="spinner-border text-primary" style={{width: "3rem", height: "3rem"}} role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
+        </div>
+      </>
+      :
+      <>
     <div className="container-xxl py-5">
             <div className="container">
                 <div className="row g-0 gx-5 align-items-end">
                     <div className="col-lg-6">
                         <div className="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
-                            <h1 className="mb-3">Property Listing</h1>
-                            <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum.</p>
+                            <h1 className="mb-3">Home</h1>
+                            <p>Rent a house</p>
                         </div>
                     </div>
                     <div className="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
@@ -66,7 +76,7 @@ export default function ListHome() {
                                           <a href=""><img className="img-fluid" src={item.image} style={{height: "400px", width: "100%"}} alt=""/></a>
                                           { user.idUser === item.idUser &&
                                             <>
-                                              <button className="btn-secondary rounded text-white position-absolute start-0 top-0 m-1 py-1 px-2"
+                                              <button className="btn-danger rounded text-white position-absolute start-0 top-0 m-1 py-1 px-2"
                                                 onClick={() => {
                                                   swal({
                                                     title: "Are you sure?",
@@ -78,8 +88,8 @@ export default function ListHome() {
                                                   .then((willDelete) => {
                                                     if (willDelete) {
                                                       dispatch(deleteHome(item.idHome)).then(()=>{
-                                                        dispatch(getHomes(page1)).then(()=>{
-                                                          navigate('/home?page='+page1)
+                                                        dispatch(getHomes(1)).then(()=>{
+                                                          navigate('/home')
                                                         })
                                                       })
                                                       swal("Poof! Your imaginary file has been deleted!", {
@@ -108,9 +118,9 @@ export default function ListHome() {
                                           <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
                                       </div>
                                       <div className="d-flex border-top">
-                                          <small className="flex-fill text-center border-end py-2"><i className="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                          <small className="flex-fill text-center border-end py-2"><i className="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                          <small className="flex-fill text-center py-2"><i className="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                          <small className="flex-fill text-center border-end py-2"><i className="fa fa-ruler-combined text-primary me-2"></i>{item.floorArea} m<sup>2</sup></small>
+                                          <small className="flex-fill text-center border-end py-2"><i className="fa fa-bed text-primary me-2"></i>{item.bedrooms} Bed</small>
+                                          <small className="flex-fill text-center py-2"><i className="fa fa-bath text-primary me-2"></i>{item.bathrooms} Bath</small>
                                       </div>
                                   </div>
                                 </div>
@@ -126,7 +136,7 @@ export default function ListHome() {
                                           <a href=""><img className="img-fluid" src={item.image} style={{height: "400px", width: "100%"}} alt=""/></a>
                                           { user.idUser === item.idUser &&
                                             <>
-                                              <button className="btn-secondary rounded text-white position-absolute start-0 top-0 m-1 py-1 px-2"
+                                              <button className="btn-danger rounded text-white position-absolute start-0 top-0 m-1 py-1 px-2"
                                                 onClick={() => {
                                                   swal({
                                                     title: "Are you sure?",
@@ -138,8 +148,8 @@ export default function ListHome() {
                                                   .then((willDelete) => {
                                                     if (willDelete) {
                                                       dispatch(deleteHome(item.idHome)).then(()=>{
-                                                        dispatch(getHomes(page1)).then(()=>{
-                                                          navigate('/home?page='+page1)
+                                                        dispatch(getHomes(1)).then(()=>{
+                                                          navigate('/home')
                                                         })
                                                       })
                                                       swal("Poof! Your imaginary file has been deleted!", {
@@ -166,11 +176,12 @@ export default function ListHome() {
                                           <h5 className="text-primary mb-3">${item.price}</h5>
                                           <a className="d-block h5 mb-2" href="">{item.description}</a>
                                           <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
+                                          <Link to={`rent-home/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
                                       </div>
                                       <div className="d-flex border-top">
-                                          <small className="flex-fill text-center border-end py-2"><i className="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                                          <small className="flex-fill text-center border-end py-2"><i className="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                          <small className="flex-fill text-center py-2"><i className="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                          <small className="flex-fill text-center border-end py-2"><i className="fa fa-ruler-combined text-primary me-2"></i>{item.floorArea} m<sup>2</sup></small>
+                                          <small className="flex-fill text-center border-end py-2"><i className="fa fa-bed text-primary me-2"></i>{item.bedrooms} Bed</small>
+                                          <small className="flex-fill text-center py-2"><i className="fa fa-bath text-primary me-2"></i>{item.bathrooms} Bath</small>
                                       </div>
                                   </div>
                                 </div>
@@ -241,6 +252,8 @@ export default function ListHome() {
                 </div>
             </div>
         </div>
+      </>
+    }
     </>
   )
 }

@@ -12,6 +12,7 @@ const initialState = {
   homes: [],
   home: {},
   searchHome: [],
+  loading: true
 };
 
 const homeSlice = createSlice({
@@ -21,6 +22,7 @@ const homeSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getHomes.fulfilled, (state, action) => {
       state.homes = action.payload;
+      state.loading = false;
     });
     builder.addCase(addHome.fulfilled, (state, action) => {
       state.homes.homes.push(action.payload);

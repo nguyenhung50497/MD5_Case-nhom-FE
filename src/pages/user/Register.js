@@ -60,7 +60,7 @@ export default function Register() {
       });
     }
     Promise.all(promises)
-      .then(() => alert("All images uploaded"))
+      .then(() => swal("All images uploaded"))
       .catch((err) => console.log(err));
   };
 
@@ -79,85 +79,81 @@ export default function Register() {
 
   return (
     <div className="row">
-      <div className="col-8 offset-3">
-        <h1 className="text-center">Register</h1>
-        <div className="row">
-          <div className="col-7">
-            <Formik
-              initialValues={{
-                username: "",
-                password: "",
-              }}
-              validationSchema={validateSchema}
-              onSubmit={(values) => {
-                handleRegister(values);
-              }}
-            >
-              <Form>
-                <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <Field
-                    type="text"
-                    name={"username"}
-                    className="form-control"
-                    id="username"
-                  />
-                  <alert className="text-danger">
-                    <ErrorMessage name={"username"}></ErrorMessage>
-                  </alert>
+      <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "600px"}}>
+                    <h1 class="mb-3">Register</h1>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <Field
-                    type="password"
-                    name={"password"}
-                    className="form-control"
-                    id="password"
-                  />
-                  <alert className="text-danger">
-                    <ErrorMessage name={"password"}></ErrorMessage>
-                  </alert>
+                <div class="row g-4">
+                    <div class="col-md-8">
+                        <div class="wow fadeInUp" data-wow-delay="0.5s">
+                            <Formik
+                              initialValues={{
+                                username: "",
+                                password: "",
+                              }}
+                              validationSchema={validateSchema}
+                              onSubmit={(values) => {
+                                handleRegister(values);
+                              }}
+                            >
+                            <Form>
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <Field type="text" class="form-control" name={'username'} id="username" placeholder="Username"/>
+                                            <label for="username">Username</label>
+                                            <alert className="text-danger">
+                                              <ErrorMessage name={"username"}></ErrorMessage>
+                                            </alert>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <Field type="password" class="form-control" name={'password'} id="password" placeholder="Password"/>
+                                            <label for="password">Password</label>
+                                            <alert className="text-danger">
+                                              <ErrorMessage name={"password"}></ErrorMessage>
+                                            </alert>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <label for="exampleFormControlFile1">
+                                        <strong>Upload Image Here</strong>
+                                      </label>
+                                      <input
+                                        type="file"
+                                        class="form-control-file"
+                                        id="exampleFormControlFile1"
+                                        multiple
+                                        onChange={handleChange}
+                                      />
+                                    </div>
+                                    <div class="col-md-6">
+                                      <button
+                                        type="button"
+                                        className="btn btn-secondary w-100 py-3"
+                                        onClick={() => dispatch(handleUpload)}
+                                      >
+                                        Upload
+                                      </button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <Link to={"/"}><button class="btn btn-primary w-100 py-3" type="button">Login</button></Link>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-warning w-100 py-3" type="submit">Signup</button>
+                                    </div>
+                                </div>
+                            </Form>
+                            </Formik>
+                        </div>
+                    </div>
+                    <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
+                          <img className="position-relative rounded w-100 h-100" src={urls[0]} alt={urls[0]} />
+                    </div>
                 </div>
-                <div class="form-group">
-                  <label for="exampleFormControlFile1">
-                    <strong>Upload Image Album</strong>
-                  </label>
-                  <input
-                    type="file"
-                    class="form-control-file"
-                    id="exampleFormControlFile1"
-                    multiple
-                    onChange={handleChange}
-                  />
-                  <br />
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => dispatch(handleUpload)}
-                  >
-                    Upload
-                  </button>
-                </div>
-                <div>
-                  <button type="button" className="btn btn-secondary">
-                    <Link
-                      to={"/"}
-                      style={{ textDecoration: "none", color: "white" }}
-                    >
-                      Login
-                    </Link>
-                  </button>
-                  <button type="submit" className="btn btn-primary ml-3">
-                    Signup
-                  </button>
-                </div>
-              </Form>
-            </Formik>
-          </div>
-          <div className="col-5">
-            <img className="mt-1" src={urls[0]} alt={urls[0]} />
-          </div>
-        </div>
+            </div>
       </div>
     </div>
   );
