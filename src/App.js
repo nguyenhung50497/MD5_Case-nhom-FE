@@ -14,6 +14,7 @@ import RentHome from "./pages/homes/RentHome";
 import HomeDetail from "./pages/homes/HomeDetail";
 import MyOrder from "./pages/user/myOrder";
 import EditOrder from "./pages/user/editOrder";
+import MyHome from "./pages/homes/MyHome";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
@@ -29,6 +30,7 @@ function App() {
             <Route path={"edit-home/:id"} element={<EditHome/>}/>
             <Route path={"rent-home/:id"} element={<RentHome/>}/>
             <Route path={"home-detail/:id"} element={<HomeDetail/>}/>
+            <Route path={"my-home/:id"} element={<MyHome/>}/>
           </Route>
           <Route path={"user"} element={<User/>}>
             <Route path={":idUser"} element={<Profile/>}></Route>

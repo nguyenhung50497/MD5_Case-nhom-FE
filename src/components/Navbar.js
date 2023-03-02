@@ -43,8 +43,17 @@ export default function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarCollapse">
                     <div className="navbar-nav ms-auto">
-                        <Link to="/home" className="nav-item nav-link active">Home</Link>
-                        <Link to="create-home" className="nav-item nav-link">Create Home</Link>
+                        <div className="nav-item dropdown">
+                            <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Home</a>
+                            <div className="dropdown-menu rounded-0 m-0">
+                                <Link className="dropdown-item" to={`create-home`}>
+                                  Create Home
+                                </Link>
+                                <Link className="dropdown-item" to={`my-home/${user.idUser}`}>
+                                  My Home
+                                </Link>
+                            </div>
+                        </div>
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">{user.username}</a>
                             <div className="dropdown-menu rounded-0 m-0">

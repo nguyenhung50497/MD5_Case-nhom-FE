@@ -5,6 +5,7 @@ import {
   editHome,
   getHomeById,
   getHomes,
+  getMyHome,
   searchHome,
 } from "../../service/homeService";
 
@@ -23,6 +24,11 @@ const homeSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getHomes.fulfilled, (state, action) => {
+      state.homes = action.payload;
+      state.loading = false;
+      state.home = {};
+    });
+    builder.addCase(getMyHome.fulfilled, (state, action) => {
       state.homes = action.payload;
       state.loading = false;
       state.home = {};

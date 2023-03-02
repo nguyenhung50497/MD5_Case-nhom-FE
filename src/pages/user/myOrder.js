@@ -88,7 +88,7 @@ export default function MyOrder() {
                                                                     dispatch(getOrderDetailsByIdUser(idUser)).then(()=>{
                                                                         navigate(`/user/my-order/${idUser}`)
                                                                     })
-                                                                    swal("Poof! Your order has been deleted!", {
+                                                                    swal("Check out successfully!", {
                                                                         icon: "success",
                                                                     });
                                                                 })

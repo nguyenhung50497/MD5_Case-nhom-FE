@@ -15,6 +15,15 @@ export const getHomeById = createAsyncThunk("homes/getHome", async (data) => {
   return res.data;
 });
 
+export const getMyHome = createAsyncThunk("homes/getMyHome", async () => {
+  const res = await customAxios.get("homes/my-homes/" ,
+   { headers: {
+      'Content-Type': 'application/json',
+      authorization: 'Bearer ' + localStorage.getItem('access-token'),
+    }});
+  return res.data;
+});
+
 export const addHome = createAsyncThunk("homes/addHome", async (data) => {
   const res = await customAxios.post("homes", data,
   { headers: {
