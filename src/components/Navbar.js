@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { searchHome } from "../service/homeService";
+import { getHomes, searchHome } from "../service/homeService";
 
 export default function Navbar() {
   const [page, setPage] = useSearchParams();
@@ -21,12 +21,18 @@ export default function Navbar() {
     <>
         <div className="container-fluid nav-bar bg-transparent">
             <nav className="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <Link to="/home" className="navbar-brand d-flex align-items-center text-center">
+                <a className="btn btn-light btn-outline-light navbar-brand d-flex align-items-center text-center" 
+                  onClick={() =>{
+                    dispatch(getHomes(1)).then(()=>{
+                      navigate(`/home`)
+                    })
+                  }}
+                >
                     <div className="icon p-2 me-2">
                         <img className="img-fluid" src="/img/icon-deal.png" alt="Icon" style={{width: "30px", height: "30px"}}/>
                     </div>
                     <h1 className="m-0 text-primary">Green Home</h1>
-                </Link>
+                </a>
                 <input
                   className="form-control"
                   type="search"
@@ -49,9 +55,9 @@ export default function Navbar() {
                                 <Link className="dropdown-item" to={`create-home`}>
                                   Create Home
                                 </Link>
-                                <Link className="dropdown-item" to={`my-home/${user.idUser}`}>
+                                <a className="dropdown-item" to={`my-home/${user.idUser}`}>
                                   My Home
-                                </Link>
+                                </a>
                             </div>
                         </div>
                         <div className="nav-item dropdown">
