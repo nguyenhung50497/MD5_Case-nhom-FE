@@ -7,6 +7,12 @@ import { useSelector } from "react-redux";
 import CreateHome from "./pages/homes/CreateHome";
 import ListHome from "./pages/homes/ListHome";
 import EditHome from "./pages/homes/EditHome";
+import Profile from "./pages/user/profile";
+import User from "./pages/home/User";
+import ChangePassword from "./pages/user/ChangePassword";
+import RentHome from "./pages/homes/RentHome";
+import HomeDetail from "./pages/homes/HomeDetail";
+import MyOrder from "./pages/user/myOrder";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
@@ -17,21 +23,17 @@ function App() {
           <Route path={""} element={<Login></Login>}></Route>
           <Route path={"register"} element={<Register></Register>}></Route>
           <Route path={"home"} element={<Home />}>
-            <Route path={""} element={<ListHome></ListHome>}></Route>
-            <Route path={"create-home"} element={<CreateHome></CreateHome>} />
-            <Route path={"edit-home/:id"} element={<EditHome />}></Route>
-            <Route path={"delete-home/:id"}></Route>
+            <Route path={""} element={<ListHome/>}></Route>
+            <Route path={"create-home"} element={<CreateHome/>}/>
+            <Route path={"edit-home/:id"} element={<EditHome/>}/>
+            <Route path={"rent-home/:id"} element={<RentHome/>}/>
+            <Route path={"home-detail/:id"} element={<HomeDetail/>}/>
           </Route>
-
-          {/* {
-                        user !== "User not found" && user !== "Wrong password" ? 
-                        <Route path={'home'} element={<Home/>}>
-                            <Route path={'albums'} element={<ListHome/>}></Route>
-                            <Route path={'create-album'} element={<CreateHome/>}></Route>
-                            <Route path={'edit-album/:id'} element={<EditHome/>}></Route>
-                        </Route> :
-                        <Route path={'*'} element={<Login></Login>}></Route>
-                    } */}
+          <Route path={"user"} element={<User/>}>
+            <Route path={":idUser"} element={<Profile/>}></Route>
+            <Route path={"change-password/:idUser"} element={<ChangePassword/>}></Route>
+            <Route path={"my-order/:idUser"} element={<MyOrder/>}></Route>
+          </Route>
         </Routes>
       </div>
     </>

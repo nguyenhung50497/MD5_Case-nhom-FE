@@ -1,87 +1,80 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { searchHome } from "../service/homeService";
 
 export default function Navbar() {
+  const [page, setPage] = useSearchParams();
+  const page1 = page.get("page") || 1;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
+  const totalPages = useSelector((state) => {
+    if (state.homes.homes !== undefined) {
+      return state.homes.homes.totalPage;
+    }
+  });
   const handleSearch = (value) => {
-    dispatch(searchHome(value))
+    dispatch(searchHome([page1, value]))
   }
   return (
     <>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <Link class="navbar-brand" to="/home">
-          Home
-        </Link>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <Link class="nav-link" to="create-home">
-                Add Home <span class="sr-only">(current)</span>
-              </Link>
-            </li>
-          </ul>
-          <ul class="navbar-nav mr-auto">
-              <input
-                  className="form-control mr-sm-2"
+        <div className="container-fluid nav-bar bg-transparent">
+            <nav className="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
+                <Link to="/home" className="navbar-brand d-flex align-items-center text-center">
+                    <div className="icon p-2 me-2">
+                        <img className="img-fluid" src="/img/icon-deal.png" alt="Icon" style={{width: "30px", height: "30px"}}/>
+                    </div>
+                    <h1 className="m-0 text-primary">Green Home</h1>
+                </Link>
+                <input
+                  className="form-control"
                   type="search"
                   name={'search'}
                   placeholder="Search"
                   aria-label="Search"
-                  style={{width: "500px"}}
+                  style={{maxWidth: "250px"}}
                   onKeyUp={(e) => {
                     handleSearch(e.target.value)
                   }}
-              />
-          </ul>
-          <div class="btn-group">
-            <button
-              type="button"
-              class="btn btn-secondary dropdown-toggle"
-              data-toggle="dropdown"
-              aria-expanded="false"
-            >
-              {user.username}
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="#">
-                Profile
-              </a>
-              <div class="dropdown-divider"></div>
-              <a
-                class="dropdown-item btn text-danger"
-                onClick={() => {
-                  localStorage.clear();
-                  navigate("/");
-                }}
-              >
-                Logout
-              </a>
-            </div>
-          </div>
-          <img
-            className="ml-3"
-            src={user.avatar}
-            alt={user.avatar}
-            style={{ width: "50px", height: "50px", borderRadius: "25%" }}
-          />
+                />
+                <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarCollapse">
+                    <div className="navbar-nav ms-auto">
+                        <Link to="/home" className="nav-item nav-link active">Home</Link>
+                        <Link to="create-home" className="nav-item nav-link">Create Home</Link>
+                        <div className="nav-item dropdown">
+                            <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">{user.username}</a>
+                            <div className="dropdown-menu rounded-0 m-0">
+                                <Link className="dropdown-item" to={`/user/${user.idUser}`}>
+                                  Profile
+                                </Link>
+                                <Link className="dropdown-item" to={`/user/my-order/${user.idUser}`}>
+                                  My Order
+                                </Link>
+                                <Link className="dropdown-item" to={`/user/change-password/${user.idUser}`}>
+                                  Change Password
+                                </Link>
+                                <a className="btn dropdown-item text-danger" 
+                                  onClick={() => {
+                                    localStorage.removeItem("access-token");
+                                    localStorage.clear();
+                                    navigate("/");
+                                  }}>Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <img
+                      className="ml-3"
+                      src={user.avatar}
+                      alt={user.avatar}
+                      style={{ width: "50px", height: "50px", borderRadius: "25%" }}
+                    />
+            </nav>
         </div>
-      </nav>
     </>
   );
 }
