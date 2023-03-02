@@ -52,13 +52,10 @@ export default function ListHome() {
                     <div className="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
                         <ul className="nav nav-pills d-inline-flex justify-content-end mb-5">
                             <li className="nav-item me-2">
-                                <a className="btn btn-outline-primary active" data-bs-toggle="pill" href="#tab-1">Featured</a>
-                            </li>
-                            <li className="nav-item me-2">
-                                <a className="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-2">For Sell</a>
+                                <button className="btn btn-outline-primary" data-bs-toggle="pill">For rent</button>
                             </li>
                             <li className="nav-item me-0">
-                                <a className="btn btn-outline-primary" data-bs-toggle="pill" href="#tab-3">For Rent</a>
+                                <button className="btn btn-outline-warning" data-bs-toggle="pill">Rented</button>
                             </li>
                         </ul>
                     </div>
@@ -119,13 +116,13 @@ export default function ListHome() {
                                             <Link to={`home-detail/${item.idHome}`} className="d-block h5 mb-2" style={{textDecoration: 'none'}}>{item.nameHome}</Link>
                                             <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
                                             { item.idUser !== user.idUser && item.status === "For rent" &&
-                                                <Link to={`rent-home/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
+                                                <Link to={`home-detail/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
                                             }
                                             { item.idUser !== user.idUser && item.status === "Rented" &&
-                                                <button className="btn btn-warning w-100 mb-3">Rented</button>
+                                                <button className="btn btn-warning w-100 mb-3" disabled>Rented</button>
                                             }
                                             { item.idUser === user.idUser &&
-                                                <button className="btn btn-warning w-100 mb-3">Own</button>
+                                                <button className="btn btn-warning w-100 mb-3" disabled>Own</button>
                                             }
                                         </div>
                                         <div className="d-flex border-top">
@@ -249,13 +246,13 @@ export default function ListHome() {
                                             <Link to={`home-detail/${item.idHome}`} className="d-block h5 mb-2" style={{textDecoration: 'none'}}>{item.nameHome}</Link>
                                             <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
                                             { item.idUser !== user.idUser && item.status === "For rent" &&
-                                                <Link to={`rent-home/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
+                                                <Link to={`home-detail/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
                                             }
                                             { item.idUser !== user.idUser && item.status === "Rented" &&
-                                                <button className="btn btn-warning w-100 mb-3">Rented</button>
+                                                <button className="btn btn-warning w-100 mb-3" disabled>Rented</button>
                                             }
                                             { item.idUser === user.idUser &&
-                                                <button className="btn btn-warning w-100 mb-3">Own</button>
+                                                <button className="btn btn-warning w-100 mb-3" disabled>Own</button>
                                             }
                                         </div>
                                         <div className="d-flex border-top">

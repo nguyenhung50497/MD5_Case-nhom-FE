@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router"
-import { getOrderDetailsByIdUser } from "../../service/orderDetailService";
+import { cancelOrderDetail, getOrderDetailsByIdUser } from "../../service/orderDetailService";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
 
@@ -18,7 +18,6 @@ export default function MyOrder() {
     useEffect(()=>{
         dispatch(getOrderDetailsByIdUser(idUser))
     }, [])
-    console.log(myOrder);
     return(
         <>
             {
@@ -68,28 +67,48 @@ export default function MyOrder() {
                                             </>
                                             :
                                             <>
-                                                <td><button className="btn btn-primary">Edit</button></td>
-                                                <td><button className="btn btn-danger"
-                                                    onClick={() => {
-                                                        swal({
-                                                          title: "Are you sure?",
-                                                          text: "Once deleted, you will not be able to recover this order!",
-                                                          icon: "warning",
-                                                          buttons: true,
-                                                          dangerMode: true,
-                                                        })
-                                                        .then((willDelete) => {
-                                                          if (willDelete) {
-                                                            swal("Poof! Your order has been deleted!", {
-                                                              icon: "success",
+                                            {
+                                                item.statusOrder === "Check in" ?
+                                                <>
+                                                    <td><Link to={`/user/edit-order/${item.idOrderDetail}`}><button className="btn btn-primary">Edit</button></Link></td>
+                                                    <td>
+                                                        <button className="btn btn-danger"
+                                                        onClick={() => {
+                                                            swal({
+                                                            title: "Are you sure?",
+                                                            text: "Once deleted, you will not be able to recover this order!",
+                                                            icon: "warning",
+                                                            buttons: true,
+                                                            dangerMode: true,
+                                                            })
+                                                            .then((willDelete) => {
+                                                            if (willDelete) {
+                                                                dispatch(cancelOrderDetail([item.idOrderDetail, +idUser])).then((e) => {
+                                                                    if (e.payload[0] === `Wrong`) {
+                                                                        swal(`You can't cancel!!!`)
+                                                                    } else {
+                                                                        dispatch(getOrderDetailsByIdUser(idUser)).then(()=>{
+                                                                            navigate(`/user/my-order/${idUser}`)
+                                                                        })
+                                                                        swal("Poof! Your order has been deleted!", {
+                                                                        icon: "success",
+                                                                        });
+                                                                    }
+                                                                })
+                                                            } else {
+                                                                swal("Your order is safe!");
+                                                            }
                                                             });
-                                                          } else {
-                                                            swal("Your order is safe!");
-                                                          }
-                                                        });
-                                                    }}
-                                                >
-                                                    Delete</button></td>
+                                                        }}
+                                                    >
+                                                        Cancel</button></td>
+                                                </>
+                                                :
+                                                <>
+                                                    <td><Link to={`/home/rent-home/${item.idHome}`}><button className="btn btn-primary">Rent again</button></Link></td>
+                                                    <td></td>
+                                                </>
+                                            }
                                             </>
                                         }
                                     </tr>

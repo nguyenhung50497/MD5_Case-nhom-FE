@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getOrderDetails, getOrderDetailsByIdUser, rentHome } from "../../service/orderDetailService";
+import { cancelOrderDetail, editOrderDetail, getOrderDetails, getOrderDetailsById, getOrderDetailsByIdUser, rentHome } from "../../service/orderDetailService";
 
 const initialState = {
   orderDetails: [],
+  orderDetail: [],
   loading: true
 };
 
@@ -18,8 +19,20 @@ const orderDetailSlice = createSlice({
     builder.addCase(rentHome.fulfilled, (state, action) => {
       state.orderDetails.push(action.payload);
     });
+    builder.addCase(editOrderDetail.fulfilled, (state, action) => {
+      state.orderDetails = action.payload;
+      state.loading = false;
+    });
     builder.addCase(getOrderDetailsByIdUser.fulfilled, (state, action) => {
       state.orderDetails = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getOrderDetailsById.fulfilled, (state, action) => {
+      state.orderDetail = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(cancelOrderDetail.fulfilled, (state, action) => {
+      state.orderDetails = action.payload[1];
       state.loading = false;
     });
     // builder.addCase(editHome.fulfilled, (state, action) => {
