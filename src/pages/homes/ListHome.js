@@ -116,7 +116,7 @@ export default function ListHome() {
                                             <Link to={`home-detail/${item.idHome}`} className="d-block h5 mb-2" style={{textDecoration: 'none'}}>{item.nameHome}</Link>
                                             <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
                                             { item.idUser !== user.idUser && item.status === "For rent" &&
-                                                <Link to={`home-detail/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
+                                                <Link to={`rent-home/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
                                             }
                                             { item.idUser !== user.idUser && item.status === "Rented" &&
                                                 <button className="btn btn-warning w-100 mb-3" disabled>Rented</button>
@@ -246,7 +246,7 @@ export default function ListHome() {
                                             <Link to={`home-detail/${item.idHome}`} className="d-block h5 mb-2" style={{textDecoration: 'none'}}>{item.nameHome}</Link>
                                             <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
                                             { item.idUser !== user.idUser && item.status === "For rent" &&
-                                                <Link to={`home-detail/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
+                                                <Link to={`rent-home/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
                                             }
                                             { item.idUser !== user.idUser && item.status === "Rented" &&
                                                 <button className="btn btn-warning w-100 mb-3" disabled>Rented</button>

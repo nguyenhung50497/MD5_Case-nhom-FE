@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router"
-import { cancelOrderDetail, getOrderDetailsByIdUser } from "../../service/orderDetailService";
+import { cancelOrderDetail, checkOut, getOrderDetailsByIdUser } from "../../service/orderDetailService";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
 
@@ -43,7 +43,7 @@ export default function MyOrder() {
                                 <th scope="col">Check In</th>
                                 <th scope="col">Check Out</th>
                                 <th scope="col">Status</th>
-                                <th scope="col" colSpan={2} className="text-center">Action</th>
+                                <th scope="col" colSpan={3} className="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,6 +64,7 @@ export default function MyOrder() {
                                             <>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
                                             </>
                                             :
                                             <>
@@ -72,11 +73,38 @@ export default function MyOrder() {
                                                 <>
                                                     <td><Link to={`/user/edit-order/${item.idOrderDetail}`}><button className="btn btn-primary">Edit</button></Link></td>
                                                     <td>
+                                                        <button className="btn btn-warning"
+                                                        onClick={() => {
+                                                            swal({
+                                                            title: "Are you sure?",
+                                                            text: "Once check out, you will not be able to recover this order!",
+                                                            icon: "warning",
+                                                            buttons: true,
+                                                            dangerMode: true,
+                                                            })
+                                                            .then((willDelete) => {
+                                                            if (willDelete) {
+                                                                dispatch(checkOut([item.idOrderDetail, {idHome:item.idHome}])).then((e) => {
+                                                                    dispatch(getOrderDetailsByIdUser(idUser)).then(()=>{
+                                                                        navigate(`/user/my-order/${idUser}`)
+                                                                    })
+                                                                    swal("Poof! Your order has been deleted!", {
+                                                                        icon: "success",
+                                                                    });
+                                                                })
+                                                            } else {
+                                                                swal("Your order is safe!");
+                                                            }
+                                                            });
+                                                        }}
+                                                    >
+                                                        Check out</button></td>
+                                                    <td>
                                                         <button className="btn btn-danger"
                                                         onClick={() => {
                                                             swal({
                                                             title: "Are you sure?",
-                                                            text: "Once deleted, you will not be able to recover this order!",
+                                                            text: "Once canceled, you will not be able to recover this order!",
                                                             icon: "warning",
                                                             buttons: true,
                                                             dangerMode: true,
@@ -105,6 +133,7 @@ export default function MyOrder() {
                                                 </>
                                                 :
                                                 <>
+                                                    <td></td>
                                                     <td><Link to={`/home/rent-home/${item.idHome}`}><button className="btn btn-primary">Rent again</button></Link></td>
                                                     <td></td>
                                                 </>

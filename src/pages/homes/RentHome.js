@@ -21,11 +21,17 @@ export default function RentHome() {
       });
     const handleRent = (values) => {
         let data = {...values, idHome: +id, idOrder: user.idOrder}
-        dispatch(rentHome(data)).then(()=>{
-            dispatch(getHomes(1)).then(()=>{
-                swal('Order successfully')
-                navigate('/home')
-            });
+        dispatch(rentHome(data)).then((e)=>{
+            if (e.payload === 'Wrong Check In') {
+              swal('Wrong Check In')
+            } else if (e.payload === 'Wrong Check Out'){
+              swal('Wrong Check Out')
+            } else {
+              dispatch(getHomes(1)).then(()=>{
+                  swal('Order successfully')
+                  navigate('/home')
+              });
+            }
         })
     }
     useEffect(() => {
@@ -57,7 +63,10 @@ export default function RentHome() {
                             <div className="d-block h5 mb-2">{home.description}</div>
                             <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{home.address}</p>
                             {
-                                home.status === "Rented" && <button className="btn btn-warning w-100 mb-3">Rented</button>
+                                home.status === "Rented" && <button className="btn btn-warning w-100 mb-3" disabled>Rented</button>
+                            }
+                            {
+                                home.idUser === user.idUser && <button className="btn btn-warning w-100 mb-3" disabled>Own</button>
                             }
                         </div>
                         <div className="d-flex border-top">

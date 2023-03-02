@@ -26,17 +26,17 @@ export const rentHome = createAsyncThunk(
 export const editOrderDetail = createAsyncThunk(
   "homes/editOrderDetail",
   async (data) => {
-  await customAxios.put("orderDetails/edit/" + data[1], data[0],
+  const res1 = await customAxios.put("orderDetails/edit/" + data[1], data[0],
   { headers: {
     'Content-Type': 'application/json',
     authorization: 'Bearer ' + localStorage.getItem('access-token'),
   }});
-  const res = await customAxios.get("orderDetails/my-order-detail/" + data[2],
+  const res2 = await customAxios.get("orderDetails/my-order-detail/" + data[2],
   { headers: {
     'Content-Type': 'application/json',
     authorization: 'Bearer ' + localStorage.getItem('access-token'),
   }});
-  return res.data;
+  return [res1.data, res2.data];
 });
 
 export const getOrderDetailsByIdUser = createAsyncThunk(
@@ -75,4 +75,32 @@ export const getOrderDetailsById = createAsyncThunk(
     authorization: 'Bearer ' + localStorage.getItem('access-token'),
   }});
   return res.data;
+});
+
+export const getOrderDetailsByHome = createAsyncThunk(
+  "homes/getOrderDetailsByHome",
+  async (data) => {
+  const res = await customAxios.get("orderDetails/order-by-home/" + data,
+  { headers: {
+    'Content-Type': 'application/json',
+    authorization: 'Bearer ' + localStorage.getItem('access-token'),
+  }});
+  return res.data;
+});
+
+export const checkOut = createAsyncThunk(
+  "homes/checkOut",
+  async (data) => {
+    console.log(data);
+  const res1 = await customAxios.put("orderDetails/check-out/" + data[0], data[1],
+  { headers: {
+    'Content-Type': 'application/json',
+    authorization: 'Bearer ' + localStorage.getItem('access-token'),
+  }});
+  const res2 = await customAxios.get("orderDetails/my-order-detail/" + data,
+  { headers: {
+    'Content-Type': 'application/json',
+    authorization: 'Bearer ' + localStorage.getItem('access-token'),
+  }});
+  return [res1.data, res2.data];
 });

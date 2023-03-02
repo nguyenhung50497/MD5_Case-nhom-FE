@@ -15,9 +15,13 @@ export default function EditOrder() {
     const user = useSelector(state => state.user.currentUser);
     const handleEdit = (values) =>{
         let data = [{...values}, +id, user.idUser];
-        dispatch(editOrderDetail(data)).then(() => {
-            swal('Edit successfully')
-            navigate(`/user/my-order/${user.idUser}`);
+        dispatch(editOrderDetail(data)).then((e) => {
+            if (e.payload[0] === 'Wrong Check Out') {
+                swal('Wrong Check Out')
+            } else {
+                swal('Edit successfully')
+                navigate(`/user/my-order/${user.idUser}`);
+            }
         })
     }
     useEffect(()=>{

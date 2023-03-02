@@ -5,7 +5,7 @@ import { Formik, Form, Field } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import { getHomeById, getHomes } from "../../service/homeService";
-import { rentHome } from "../../service/orderDetailService";
+import { getOrderDetailsByHome, rentHome } from "../../service/orderDetailService";
 import { useEffect } from "react";
 
 export default function RentHome() {
@@ -15,10 +15,14 @@ export default function RentHome() {
     const navigate = useNavigate();
     const home = useSelector((state) => {
         return state.homes.home;
-      });
-      const loading = useSelector((state) => {
+    });
+    const orderDetail = useSelector(state => state.orderDetails.orderDetails);
+    const loading = useSelector((state) => {
         return state.homes.loading
-      });
+    });
+    const loadingOrder = useSelector((state) => {
+        return state.orderDetails.loading
+    });
     const handleRent = (values) => {
         let data = {...values, idHome: +id, idOrder: user.idOrder}
         dispatch(rentHome(data)).then((e)=>{
@@ -34,15 +38,21 @@ export default function RentHome() {
             }
         })
     }
+    
     useEffect(() => {
         dispatch(getHomeById(id))
-      }, []);
+    }, []);
+    useEffect(() => {
+        dispatch(getOrderDetailsByHome(id))
+    }, []);
+    console.log(loading);
+    console.log(orderDetail);
     return (
         <>
         <div className="row">
             <div class="container-xxl py-5">
                 {
-                loading === false ?
+                loading === false && loadingOrder === false ?
                 <>
                     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
                         <div className="spinner-border text-primary" style={{width: "3rem", height: "3rem"}} role="status">
@@ -77,49 +87,35 @@ export default function RentHome() {
                     </div>
                     </div>
                     {
-                        home.status === "For rent" && home.idUser !== user.idUser &&
-                        <div class="container-xxl py-5">
-                            <div class="container">
-                                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "600px"}}>
-                                    <h1 class="mb-3">Rent Home</h1>
-                                </div>
-                                <div class="row g-4">
-                                    <div class="col-md-8 offset-2">
-                                        <div class="wow fadeInUp" data-wow-delay="0.5s">
-                                            <Formik
-                                            initialValues={{
-                                                checkIn: "",
-                                                checkIn: "",
-                                            }}
-                                            onSubmit={(values) => {
-                                                handleRent(values)
-                                            }}
-                                            >
-                                            <Form>
-                                                <div class="row g-3">
-                                                    <div class="col-md-6">
-                                                        <div class="form-floating">
-                                                            <Field type="date" class="form-control" name={'checkIn'} id="nameHome"/>
-                                                            <label for="checkIn">Check in</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-floating">
-                                                            <Field type="date" class="form-control" name={'checkOut'} id="checkOut"/>
-                                                            <label for="checkOut">Check out</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <button class="btn btn-warning w-100 py-3" type="submit">Rent</button>
-                                                    </div>
-                                                </div>
-                                            </Form>
-                                            </Formik>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        home.idUser === user.idUser &&
+                        <>
+                            <table class="table mt-5">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Usename</th>
+                                        <th scope="col">Avatar</th>
+                                        <th scope="col">Check In</th>
+                                        <th scope="col">Check Out</th>
+                                        <th scope="col">Status Order</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        orderDetail.map((item, key)=>(
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>{item.username}</td>
+                                                <td><img src={item.avatar}/></td>
+                                                <td>{item.checkIn}</td>
+                                                <td>{item.checkOut}</td>
+                                                <td>{item.statusOrder}</td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
+                        </>
                     }
                 </center>
                 }
