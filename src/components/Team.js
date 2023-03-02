@@ -3,7 +3,7 @@ export default function Team() {
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "600px"}}>
-                    <h1 class="mb-3">Nhóm 4 C0922G1</h1>
+                    <h1 class="mb-3">GROUP 4 C0922G1</h1>
                     <p>Case Study Module 5</p>
                 </div>
                 <div class="row g-4">
@@ -35,7 +35,7 @@ export default function Team() {
                             </div>
                             <div class="text-center p-4 mt-3">
                                 <h5 class="fw-bold mb-0">Nguyễn Anh Kỳ</h5>
-                                <small>Nhóm trưởng</small>
+                                <small>Leader</small>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@ export default function Team() {
                             </div>
                             <div class="text-center p-4 mt-3">
                                 <h5 class="fw-bold mb-0">Nguyễn Việt Hưng</h5>
-                                <small>Thành viên</small>
+                                <small>Member</small>
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@ export default function Team() {
                             </div>
                             <div class="text-center p-4 mt-3">
                                 <h5 class="fw-bold mb-0">Đỗ Minh Trang</h5>
-                                <small>Thành Viên</small>
+                                <small>Member</small>
                             </div>
                         </div>
                     </div>

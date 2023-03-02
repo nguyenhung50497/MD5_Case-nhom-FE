@@ -112,11 +112,11 @@ export default function ListHome() {
                                                 </Link>
                                               </>
                                             }
-                                            <Link to={`home-detail/${item.idHome}`} className="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{item.nameHome}</Link>
+                                            <div className="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{item.username}</div>
                                         </div>
                                         <div className="p-4 pb-0">
                                             <h5 className="text-primary mb-3">${item.price}</h5>
-                                            <div className="d-block h5 mb-2">{item.description}</div>
+                                            <Link to={`home-detail/${item.idHome}`} className="d-block h5 mb-2" style={{textDecoration: 'none'}}>{item.nameHome}</Link>
                                             <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
                                             { item.idUser !== user.idUser && item.status === "For rent" &&
                                                 <Link to={`rent-home/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
@@ -242,11 +242,11 @@ export default function ListHome() {
                                                 </Link>
                                               </>
                                             }
-                                            <Link to={`home-detail/${item.idHome}`} className="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{item.nameHome}</Link>
+                                            <div className="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{item.username}</div>
                                         </div>
                                         <div className="p-4 pb-0">
                                             <h5 className="text-primary mb-3">${item.price}</h5>
-                                            <div className="d-block h5 mb-2">{item.description}</div>
+                                            <Link to={`home-detail/${item.idHome}`} className="d-block h5 mb-2" style={{textDecoration: 'none'}}>{item.nameHome}</Link>
                                             <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{item.address}</p>
                                             { item.idUser !== user.idUser && item.status === "For rent" &&
                                                 <Link to={`rent-home/${item.idHome}`}><button className="btn btn-warning w-100 mb-3">Rent Home</button></Link>
