@@ -161,11 +161,11 @@ export default function ListHome() {
                                                   });
                                                 }}
                                               >
-                                                Delete
+                                                <i className="fa-solid fa-trash"></i>
                                               </button>
                                               <Link to={`edit-home/${item.idHome}`}>
                                                 <button className="btn-primary rounded text-white position-absolute start-0 top-0 m-1 mt-5 py-1 px-3">
-                                                  Edit
+                                                  <i className="fa-regular fa-pen-to-square"></i>
                                                 </button>
                                               </Link>
                                             </>
