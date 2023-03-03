@@ -55,21 +55,27 @@ export default function ListHome() {
                             <li className="nav-item me-2">
                                 <button className="btn btn-outline-danger" data-bs-toggle="pill"
                                   onClick={() => {
-                                    dispatch(getHomes(1))
+                                    dispatch(getHomes(1)).then(() => {
+                                      setCheck(0)
+                                    })
                                   }}
                                 >Total</button>
                             </li>
                             <li className="nav-item me-2">
                                 <button className="btn btn-outline-primary" data-bs-toggle="pill"
                                   onClick={() => {
-                                    dispatch(getHomeForRent(1))
+                                    dispatch(getHomeForRent(1)).then(() => {
+                                      setCheck(1)
+                                    })
                                   }}
                                 >For rent</button>
                             </li>
                             <li className="nav-item me-0">
                                 <button className="btn btn-outline-warning" data-bs-toggle="pill"
                                   onClick={() => {
-                                    dispatch(getHomeRented(1))
+                                    dispatch(getHomeRented(1)).then(() => {
+                                      setCheck(2)
+                                    })
                                   }}
                                 >Rented</button>
                             </li>
@@ -294,6 +300,8 @@ export default function ListHome() {
                                       </>
                                     ) : (
                                       <>
+                                      {
+                                        check === 0 && 
                                         <button
                                           className="page-link"
                                           onClick={() => {
@@ -304,6 +312,33 @@ export default function ListHome() {
                                           {" "}
                                           <span aria-hidden="true">&laquo;</span>
                                         </button>
+                                      }
+                                      {
+                                        check === 1 && 
+                                        <button
+                                          className="page-link"
+                                          onClick={() => {
+                                            dispatch(getHomeForRent(page1 - 1));
+                                            navigate("/home?page=" + (page1 - 1));
+                                          }}
+                                        >
+                                          {" "}
+                                          <span aria-hidden="true">&laquo;</span>
+                                        </button>
+                                      }
+                                      {
+                                        check === 2 && 
+                                        <button
+                                          className="page-link"
+                                          onClick={() => {
+                                            dispatch(getHomeRented(page1 - 1));
+                                            navigate("/home?page=" + (page1 - 1));
+                                          }}
+                                        >
+                                          {" "}
+                                          <span aria-hidden="true">&laquo;</span>
+                                        </button>
+                                      }
                                       </>
                                     )}
                                   </li>
@@ -323,6 +358,8 @@ export default function ListHome() {
                                       </>
                                     ) : (
                                       <>
+                                      {
+                                        check === 0 &&
                                         <button
                                           className="page-link"
                                           onClick={() => {
@@ -333,6 +370,33 @@ export default function ListHome() {
                                           {" "}
                                           <span aria-hidden="true">&raquo;</span>
                                         </button>
+                                      }
+                                      {
+                                        check === 1 &&
+                                        <button
+                                          className="page-link"
+                                          onClick={() => {
+                                            dispatch(getHomeForRent(Number(page1) + 1));
+                                            navigate("/home?page=" + (Number(page1) + 1));
+                                          }}
+                                        >
+                                          {" "}
+                                          <span aria-hidden="true">&raquo;</span>
+                                        </button>
+                                      }
+                                      {
+                                        check === 2 &&
+                                        <button
+                                          className="page-link"
+                                          onClick={() => {
+                                            dispatch(getHomeRented(Number(page1) + 1));
+                                            navigate("/home?page=" + (Number(page1) + 1));
+                                          }}
+                                        >
+                                          {" "}
+                                          <span aria-hidden="true">&raquo;</span>
+                                        </button>
+                                      }
                                       </>
                                     )}
                                   </li>

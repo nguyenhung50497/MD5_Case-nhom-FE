@@ -65,12 +65,12 @@ export default function RentHome() {
                     <div className="col-lg-8 col-md-8 wow fadeInUp" data-wow-delay="0.1s">
                     <div className="property-item rounded overflow-hidden">
                         <div className="position-relative overflow-hidden">
-                            <Link to={`home-detail/${home.idHome}`}><img className="img-fluid" src={home.image} style={{height: "400px", width: "100%"}} alt=""/></Link>
-                            <Link to={`home-detail/${home.idHome}`} className="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{home.nameHome}</Link>
+                            <Link to={`/home/home-detail/${home.idHome}`}><img className="img-fluid" src={home.image} style={{height: "400px", width: "100%"}} alt=""/></Link>
+                            <Link to={`/home/home-detail/${home.idHome}`} className="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">{home.nameHome}</Link>
                         </div>
                         <div className="p-4 pb-0">
                             <h5 className="text-primary mb-3">${home.price}</h5>
-                            <div className="d-block h5 mb-2">{home.description}</div>
+                            <div className="d-block h5 mb-2" style={{textAlign: "justify"}}>{home.description}</div>
                             <p><i className="fa fa-map-marker-alt text-primary me-2"></i>{home.address}</p>
                             {
                                 home.status === "Rented" && <button className="btn btn-warning w-100 mb-3" disabled>Rented</button>

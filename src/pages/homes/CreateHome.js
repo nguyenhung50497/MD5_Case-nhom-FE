@@ -20,7 +20,7 @@ const validateSchema = Yup.object().shape({
     .required("Required"),
   description: Yup.string()
     .min(2, "Too short!")
-    .max(50, "Too long!")
+    .max(500, "Too long!")
     .required("Required"),
 });
 
@@ -140,7 +140,7 @@ export default function CreateHome() {
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <Field type="text" class="form-control" name={'description'} id="description" placeholder="Description"/>
+                                            <Field as={'textarea'} class="form-control" name={'description'} id="description" placeholder="Description" style={{height: '150px'}}/>
                                             <label for="description">Description</label>
                                             <alert className="text-danger">
                                               <ErrorMessage name={"description"}></ErrorMessage>
