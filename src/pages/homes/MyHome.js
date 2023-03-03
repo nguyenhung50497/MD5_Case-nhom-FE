@@ -28,6 +28,7 @@ export default function MyHome() {
   useEffect(() => {
     dispatch(getMyHome(1))
   }, []);
+  console.log(homes);
   return (
     <>
     {
@@ -41,7 +42,16 @@ export default function MyHome() {
       </>
       :
       <>
-    <div className="container-xxl py-5">
+      {
+        homes.length <= 0 ? 
+        <>
+          <center className="mt-5">
+              <h1 className="text-danger">You don't have any homes!</h1>
+          </center>
+        </>
+        :
+        <>
+          <div className="container-xxl py-5">
             <div className="container">
                 <div className="row g-0 gx-5 align-items-end">
                     <div className="col-lg-6">
@@ -330,7 +340,9 @@ export default function MyHome() {
                     </div>
                 </div>
             </div>
-        </div>
+          </div>
+        </>
+      }
       </>
     }
     </>

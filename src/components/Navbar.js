@@ -55,9 +55,9 @@ export default function Navbar() {
                                 <Link className="dropdown-item" to={`create-home`}>
                                   Create Home
                                 </Link>
-                                <a className="dropdown-item" to={`my-home/${user.idUser}`}>
+                                <Link className="dropdown-item" to={`my-home/${user.idUser}`}>
                                   My Home
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         <div className="nav-item dropdown">

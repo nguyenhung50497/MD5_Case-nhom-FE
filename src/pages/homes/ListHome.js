@@ -39,8 +39,8 @@ export default function ListHome() {
         </div>
       </>
       :
-      <>
-    <div className="container-xxl py-5">
+        <>
+          <div className="container-xxl py-5">
             <div className="container">
                 <div className="row g-0 gx-5 align-items-end">
                     <div className="col-lg-6">
@@ -329,8 +329,8 @@ export default function ListHome() {
                     </div>
                 </div>
             </div>
-        </div>
-      </>
+          </div>
+        </>
     }
     </>
   )

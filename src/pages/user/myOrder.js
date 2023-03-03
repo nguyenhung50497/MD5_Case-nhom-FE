@@ -30,121 +30,175 @@ export default function MyOrder() {
                     </div>
                 </>
                 :
+                
                 <>
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Home</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Check In</th>
-                                <th scope="col">Check Out</th>
-                                <th scope="col">Status</th>
-                                <th scope="col" colSpan={3} className="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                myOrder.map((item, key)=>(
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>{item.nameHome}</td>
-                                        <td>{item.address}</td>
-                                        <td>{item.nameCategory}</td>
-                                        <td>{item.price}</td>
-                                        <td><Link to={`/home/home-detail/${item.idHome}`}><img src={item.image}/></Link></td>
-                                        <td>{item.checkIn}</td>
-                                        <td>{item.checkOut}</td>
-                                        <td>{item.statusOrder}</td>
-                                        {
-                                            item.statusOrder === "Check out" ?
-                                            <>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </>
-                                            :
-                                            <>
+                {
+                    myOrder.length <= 0 ? 
+                    <center className="mt-5">
+                        <h1 className="text-danger">You don't have any orders!</h1>
+                    </center>
+                    :
+                    <>
+                        <table class="table text-center">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Home</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Check In</th>
+                                    <th scope="col">Check Out</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col" colSpan={3} className="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    myOrder.map((item, key)=>(
+                                        <>
+                                        <tr>
+                                            <th scope="row" rowSpan={3}>{key+1}</th>
+                                            <td rowSpan={3}>{item.nameHome}</td>
+                                            <td rowSpan={3}>{item.address}</td>
+                                            <td rowSpan={3}>{item.nameCategory}</td>
+                                            <td rowSpan={3}>{item.price}</td>
+                                            <td rowSpan={3}><Link to={`/home/home-detail/${item.idHome}`}><img src={item.image}/></Link></td>
+                                            <td rowSpan={3}>{item.checkIn}</td>
+                                            <td rowSpan={3}>{item.checkOut}</td>
+                                            <td rowSpan={3}>{item.statusOrder}</td>
                                             {
-                                                item.statusOrder === "Check in" ?
+                                                item.statusOrder === "Check out" ?
                                                 <>
-                                                    <td><Link to={`/user/edit-order/${item.idOrderDetail}`}><button className="btn btn-primary">Edit</button></Link></td>
-                                                    <td>
-                                                        <button className="btn btn-warning"
-                                                        onClick={() => {
-                                                            swal({
-                                                            title: "Are you sure?",
-                                                            text: "Once check out, you will not be able to recover this order!",
-                                                            icon: "warning",
-                                                            buttons: true,
-                                                            dangerMode: true,
-                                                            })
-                                                            .then((willDelete) => {
-                                                            if (willDelete) {
-                                                                dispatch(checkOut([item.idOrderDetail, {idHome:item.idHome}])).then((e) => {
-                                                                    dispatch(getOrderDetailsByIdUser(idUser)).then(()=>{
-                                                                        navigate(`/user/my-order/${idUser}`)
-                                                                    })
-                                                                    swal("Check out successfully!", {
-                                                                        icon: "success",
-                                                                    });
-                                                                })
-                                                            } else {
-                                                                swal("Your order is safe!");
-                                                            }
-                                                            });
-                                                        }}
-                                                    >
-                                                        Check out</button></td>
-                                                    <td>
-                                                        <button className="btn btn-danger"
-                                                        onClick={() => {
-                                                            swal({
-                                                            title: "Are you sure?",
-                                                            text: "Once canceled, you will not be able to recover this order!",
-                                                            icon: "warning",
-                                                            buttons: true,
-                                                            dangerMode: true,
-                                                            })
-                                                            .then((willDelete) => {
-                                                            if (willDelete) {
-                                                                dispatch(cancelOrderDetail([item.idOrderDetail, +idUser])).then((e) => {
-                                                                    if (e.payload[0] === `Wrong`) {
-                                                                        swal(`You can't cancel!!!`)
-                                                                    } else {
-                                                                        dispatch(getOrderDetailsByIdUser(idUser)).then(()=>{
-                                                                            navigate(`/user/my-order/${idUser}`)
-                                                                        })
-                                                                        swal("Poof! Your order has been deleted!", {
-                                                                        icon: "success",
-                                                                        });
-                                                                    }
-                                                                })
-                                                            } else {
-                                                                swal("Your order is safe!");
-                                                            }
-                                                            });
-                                                        }}
-                                                    >
-                                                        Cancel</button></td>
+                                                    <td></td>
                                                 </>
                                                 :
                                                 <>
-                                                    <td></td>
-                                                    <td><Link to={`/home/rent-home/${item.idHome}`}><button className="btn btn-primary">Rent again</button></Link></td>
-                                                    <td></td>
+                                                {
+                                                    item.statusOrder === "Check in" ?
+                                                    <>
+                                                        <td><Link to={`/user/edit-order/${item.idOrderDetail}`}><button className="btn btn-primary">Edit</button></Link></td>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <td></td>
+                                                    </>
+                                                }
                                                 </>
                                             }
-                                            </>
-                                        }
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
+                                        </tr>
+                                        <tr>
+                                            {
+                                                item.statusOrder === "Check out" ?
+                                                <>
+                                                    <td></td>
+                                                </>
+                                                :
+                                                <>
+                                                {
+                                                    item.statusOrder === "Check in" ?
+                                                    <>
+                                                        <td>
+                                                            <button className="btn btn-warning"
+                                                            onClick={() => {
+                                                                swal({
+                                                                title: "Are you sure?",
+                                                                text: "Once check out, you will not be able to recover this order!",
+                                                                icon: "warning",
+                                                                buttons: true,
+                                                                dangerMode: true,
+                                                                })
+                                                                .then((willDelete) => {
+                                                                if (willDelete) {
+                                                                    dispatch(checkOut([item.idOrderDetail, {idHome:item.idHome}])).then((e) => {
+                                                                        dispatch(getOrderDetailsByIdUser(idUser)).then(()=>{
+                                                                            navigate(`/user/my-order/${idUser}`)
+                                                                        })
+                                                                        swal("Check out successfully!", {
+                                                                            icon: "success",
+                                                                        });
+                                                                    })
+                                                                } else {
+                                                                    swal("Your order is safe!");
+                                                                }
+                                                                });
+                                                            }}
+                                                        >
+                                                            Check out</button>
+                                                        </td>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <td></td>
+                                                        <td><Link to={`/home/rent-home/${item.idHome}`}><button className="btn btn-primary">Rent again</button></Link></td>
+                                                        <td></td>
+                                                    </>
+                                                }
+                                                </>
+                                            }
+                                        </tr>
+                                        <tr>
+                                            {
+                                                item.statusOrder === "Check out" ?
+                                                <>
+                                                    <td></td>
+                                                </>
+                                                :
+                                                <>
+                                                {
+                                                    item.statusOrder === "Check in" ?
+                                                    <>
+                                                        <td>
+                                                            <button className="btn btn-danger"
+                                                            onClick={() => {
+                                                                swal({
+                                                                title: "Are you sure?",
+                                                                text: "Once canceled, you will not be able to recover this order!",
+                                                                icon: "warning",
+                                                                buttons: true,
+                                                                dangerMode: true,
+                                                                })
+                                                                .then((willDelete) => {
+                                                                if (willDelete) {
+                                                                    dispatch(cancelOrderDetail([item.idOrderDetail, +idUser])).then((e) => {
+                                                                        if (e.payload[0] === `Wrong`) {
+                                                                            swal(`You can't cancel!!!`)
+                                                                        } else {
+                                                                            dispatch(getOrderDetailsByIdUser(idUser)).then(()=>{
+                                                                                navigate(`/user/my-order/${idUser}`)
+                                                                            })
+                                                                            swal("Poof! Your order has been deleted!", {
+                                                                            icon: "success",
+                                                                            });
+                                                                        }
+                                                                    })
+                                                                } else {
+                                                                    swal("Your order is safe!");
+                                                                }
+                                                                });
+                                                            }}
+                                                        >
+                                                            Cancel</button>
+                                                        </td>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <td></td>
+                                                        <td><Link to={`/home/rent-home/${item.idHome}`}><button className="btn btn-primary">Rent again</button></Link></td>
+                                                        <td></td>
+                                                    </>
+                                                }
+                                                </>
+                                            }
+                                        </tr>
+                                        </>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    </>
+                }
                 </>
             }
         </>
