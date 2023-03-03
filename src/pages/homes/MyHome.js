@@ -28,7 +28,6 @@ export default function MyHome() {
   useEffect(() => {
     dispatch(getMyHome(1))
   }, []);
-  console.log(homes);
   return (
     <>
     {
