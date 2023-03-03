@@ -53,6 +53,28 @@ export const searchHome = createAsyncThunk(
     return res.data;
 })
 
+export const getHomeForRent = createAsyncThunk(
+  "homes/getHomeForRent",
+  async (page) => {
+    const res = await customAxios.get('/homes/for-rent?page='+page,
+    { headers: {
+       'Content-Type': 'application/json',
+       authorization: 'Bearer ' + localStorage.getItem('access-token'),
+   }})
+  return res.data;
+})
+
+export const getHomeRented = createAsyncThunk(
+  "homes/getHomeRented",
+  async (page) => {
+    const res = await customAxios.get('/homes/rented?page='+page,
+    { headers: {
+       'Content-Type': 'application/json',
+       authorization: 'Bearer ' + localStorage.getItem('access-token'),
+   }})
+  return res.data;
+})
+
 export const editHome = createAsyncThunk(
     "homes/editHome",
     async (data) => {

@@ -4,6 +4,8 @@ import {
   deleteHome,
   editHome,
   getHomeById,
+  getHomeForRent,
+  getHomeRented,
   getHomes,
   getMyHome,
   searchHome,
@@ -29,6 +31,16 @@ const homeSlice = createSlice({
       state.home = {};
     });
     builder.addCase(getMyHome.fulfilled, (state, action) => {
+      state.homes = action.payload;
+      state.loading = false;
+      state.home = {};
+    });
+    builder.addCase(getHomeForRent.fulfilled, (state, action) => {
+      state.homes = action.payload;
+      state.loading = false;
+      state.home = {};
+    });
+    builder.addCase(getHomeRented.fulfilled, (state, action) => {
       state.homes = action.payload;
       state.loading = false;
       state.home = {};

@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router";
-import { deleteHome, getHomes, searchHome } from "../../service/homeService";
-import { useEffect } from "react";
+import { deleteHome, getHomeForRent, getHomeRented, getHomes, searchHome } from "../../service/homeService";
+import { useEffect, useState } from "react";
 import swal from "sweetalert";
 
 export default function ListHome() {
   const [page, setPage] = useSearchParams();
   const page1 = page.get("page") || 1;
+  const [check, setCheck] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const homes = useSelector((state) => {
@@ -52,10 +53,25 @@ export default function ListHome() {
                     <div className="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
                         <ul className="nav nav-pills d-inline-flex justify-content-end mb-5">
                             <li className="nav-item me-2">
-                                <button className="btn btn-outline-primary" data-bs-toggle="pill">For rent</button>
+                                <button className="btn btn-outline-danger" data-bs-toggle="pill"
+                                  onClick={() => {
+                                    dispatch(getHomes(1))
+                                  }}
+                                >Total</button>
+                            </li>
+                            <li className="nav-item me-2">
+                                <button className="btn btn-outline-primary" data-bs-toggle="pill"
+                                  onClick={() => {
+                                    dispatch(getHomeForRent(1))
+                                  }}
+                                >For rent</button>
                             </li>
                             <li className="nav-item me-0">
-                                <button className="btn btn-outline-warning" data-bs-toggle="pill">Rented</button>
+                                <button className="btn btn-outline-warning" data-bs-toggle="pill"
+                                  onClick={() => {
+                                    dispatch(getHomeRented(1))
+                                  }}
+                                >Rented</button>
                             </li>
                         </ul>
                     </div>
