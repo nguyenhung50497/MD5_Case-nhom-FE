@@ -52,10 +52,10 @@ export default function Navbar() {
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Home</a>
                             <div className="dropdown-menu rounded-0 m-0">
-                                <Link className="dropdown-item" to={`create-home`}>
+                                <Link className="dropdown-item" to={`/home/create-home`}>
                                   Create Home
                                 </Link>
-                                <Link className="dropdown-item" to={`my-home/${user.idUser}`}>
+                                <Link className="dropdown-item" to={`/home/my-home/${user.idUser}`}>
                                   My Home
                                 </Link>
                             </div>
