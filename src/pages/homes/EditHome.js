@@ -19,11 +19,11 @@ const validateSchema = Yup.object().shape({
     .required("Required"),
   description: Yup.string()
     .min(2, "Too short!")
-    .max(50, "Too long!")
+    .max(500, "Too long!")
     .required("Required"),
   price: Yup.string()
     .min(2, "Too short!")
-    .max(500, "Too long!")
+    .max(50, "Too long!")
     .required("Required"),
 });
 
