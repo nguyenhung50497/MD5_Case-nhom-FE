@@ -57,6 +57,7 @@ export default function ListHome() {
                                   onClick={() => {
                                     dispatch(getHomes(1)).then(() => {
                                       setCheck(0)
+                                      navigate('/home?page=1')
                                     })
                                   }}
                                 >Total</button>
@@ -66,6 +67,7 @@ export default function ListHome() {
                                   onClick={() => {
                                     dispatch(getHomeForRent(1)).then(() => {
                                       setCheck(1)
+                                      navigate('/home?page=1')
                                     })
                                   }}
                                 >For rent</button>
@@ -75,6 +77,7 @@ export default function ListHome() {
                                   onClick={() => {
                                     dispatch(getHomeRented(1)).then(() => {
                                       setCheck(2)
+                                      navigate('/home?page=1')
                                     })
                                   }}
                                 >Rented</button>

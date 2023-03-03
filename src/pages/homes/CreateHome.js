@@ -66,7 +66,7 @@ export default function CreateHome() {
           async () => {
             await getDownloadURL(uploadTask.snapshot.ref).then(
               (downloadURLs) => {
-                setUrls((prevState) => [...prevState, downloadURLs]);
+                setUrls([downloadURLs]);
               }
             );
           }
