@@ -3,7 +3,7 @@ export default function Team() {
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{maxWidth: "600px"}}>
-                    <h1 class="mb-3">GROUP 4 C0922G1</h1>
+                    <h1 class="mb-3">GROUP 5 C0922G1</h1>
                     <p>Case Study Module 5</p>
                 </div>
                 <div class="row g-4">

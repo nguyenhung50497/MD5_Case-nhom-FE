@@ -25,12 +25,8 @@ export default function Login() {
         navigate("/home");
       } else if (e.payload === "User not found") {
         swal("User not found");
-        navigate("/");
       } else if (e.payload === "Wrong password") {
         swal("Wrong password");
-        navigate("/");
-      } else {
-        navigate("/");
       }
     });
   };
